@@ -1,4 +1,7 @@
 import 'package:MagicFlutter/tabs/AllCards.dart';
+import 'package:MagicFlutter/tabs/MyCollection.dart';
+import 'package:MagicFlutter/tabs/MyDecks.dart';
+import 'package:MagicFlutter/tabs/MyProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -14,7 +17,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
     int selectedIndex = 0;
     List<String> pageNames = ["All cards", "My collection", "My decks", "My profile"];
     List<Widget> widgetOptions = <Widget>[
-        AllCardsView(),AllCardsView(),AllCardsView(),AllCardsView()
+        AllCardsView(),MyCollectionView(),MyDecksView(),MyProfileView()
     ];
 
     void _onItemTapped(int index) {
@@ -28,7 +31,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
             preferredSize: Size.fromHeight(40),
             child: AppBar(
                 backgroundColor: Colors.redAccent,
-                title: Text(pageNames[selectedIndex]),
+                title: Text('MagicFlutter'),
             ),
         );
     }
@@ -54,7 +57,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                     ),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.class_),
-                        title: Text('my decks'),
+                        title: Text('My decks'),
                     ),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.person),
