@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-typedef Widget RenderDualListItem(BuildContext context, int i, Widget item);
+typedef Widget RenderDualListItem<T>(BuildContext context, int i, T item);
 
 class DualList<T> extends StatefulWidget {
   final List<T> list;
@@ -22,7 +22,13 @@ class _DualListState extends State<DualList> {
     return ListView.builder(
         padding: EdgeInsets.all(16.0),
         itemCount: widget.list.length,
-        itemBuilder: (ctxt, i) => widget.renderItem(ctxt, i, widget.list[i]),
+        itemBuilder: (ctxt, i) {
+          if (i.isOdd) return Container();
+          if (widget.list.length - i < 2)
+            return _buildRow(widget.renderItem(ctxt, i, widget.list[i]), Container());
+          else
+            return _buildRow(widget.renderItem(ctxt, i, widget.list[i]), widget.renderItem(ctxt, i + 1, widget.list[i + 1]));
+        }
     );
   }
 

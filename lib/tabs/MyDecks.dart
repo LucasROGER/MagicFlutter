@@ -13,13 +13,16 @@ class MyDecksView extends StatefulWidget {
 
 class _MyDecksViewState extends State<MyDecksView> {
 
-  final decks = <Deck>[Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck()];
+  final decks = <String>["test", "test", "test", "test", "test", "test", "test", "test"];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: DualList(
+        child: DualList<String>(
           list: decks,
+          renderItem: (context, i, item) {
+            return Text('item');
+          },
         ),
     );
   }
