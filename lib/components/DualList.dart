@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:MagicFlutter/components/Deck.dart';
 
-class DualList extends StatefulWidget {
-  final List<Deck> list;
+typedef Widget RenderDualListItem(BuildContext context, int i, Widget item);
+
+class DualList<T> extends StatefulWidget {
+  final List<T> list;
+  final RenderDualListItem renderItem;
 
   DualList({
     Key key,
-    this.list
+    this.list,
+    this.renderItem,
   }) : super(key: key);
 
   @override
@@ -19,13 +22,8 @@ class _DualListState extends State<DualList> {
     return ListView.builder(
         padding: EdgeInsets.all(16.0),
         itemCount: widget.list.length,
-        itemBuilder: (context, i) {
-          if (i.isOdd) return Container();
-          if (widget.list.length - i < 2)
-            return _buildRow(widget.list[i], Container());
-          else
-            return _buildRow(widget.list[i], widget.list[i + 1]);
-        });
+        itemBuilder: (ctxt, i) => widget.renderItem(ctxt, i, widget.list[i]),
+    );
   }
 
   Widget _buildRow(Widget left, Widget right) {
