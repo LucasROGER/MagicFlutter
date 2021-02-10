@@ -1,3 +1,5 @@
+import 'package:MagicFlutter/components/Deck.dart';
+import 'package:MagicFlutter/components/DualList.dart';
 import 'package:flutter/material.dart';
 
 class MyDecksView extends StatefulWidget {
@@ -11,14 +13,14 @@ class MyDecksView extends StatefulWidget {
 
 class _MyDecksViewState extends State<MyDecksView> {
 
+  final decks = <Deck>[Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck(), Deck()];
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: ListView.builder(
-          itemCount: 0,
-          itemBuilder: (BuildContext context, int index) {
-            return;
-          },
-        ));
+        child: DualList(
+          list: decks,
+        ),
+    );
   }
 }

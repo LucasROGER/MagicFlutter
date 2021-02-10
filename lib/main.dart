@@ -5,8 +5,7 @@ void main() => runApp(MagicFlutter());
 
 class MagicFlutter extends StatelessWidget {
 
-  MagicFlutter() {
-  }
+  MagicFlutter();
 
   @override
   Widget build(BuildContext context) {
