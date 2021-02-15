@@ -12,6 +12,12 @@ class _MyCollectionViewState extends State<MyCollectionView> {
   final LocalStorage storage = new LocalStorage('my_collection');
   List cardList = [];
 
+  @override
+  void initState() {
+    _getMyCollection();
+    super.initState();
+  }
+
   _getMyCollection() {
     List myCards = storage.getItem('cards');
     myCards.map((i) {
@@ -20,12 +26,6 @@ class _MyCollectionViewState extends State<MyCollectionView> {
     setState(() {
       this.cardList = myCards;
     });
-  }
-
-  @override
-  void initState() {
-    _getMyCollection();
-    super.initState();
   }
 
   void _removeFromCollection(item) async {

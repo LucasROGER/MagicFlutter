@@ -14,6 +14,12 @@ class _AllCardsViewState extends State<AllCardsView> {
   final LocalStorage storage = new LocalStorage('my_collection');
   List allCards = [];
 
+  @override
+  void initState() {
+    _getAllCards();
+    super.initState();
+  }
+
   void _getAllCards() {
     List allCardsList = cardList;
     allCardsList.map((item) {
@@ -48,12 +54,6 @@ class _AllCardsViewState extends State<AllCardsView> {
       myCards[index] = newItem;
     }
     await storage.setItem('cards', myCards);
-  }
-
-  @override
-  void initState() {
-    _getAllCards();
-    super.initState();
   }
 
   @override
