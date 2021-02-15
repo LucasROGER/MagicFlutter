@@ -18,6 +18,7 @@ class Navigation extends StatelessWidget {
       title: 'MagicFlutter',
       theme: ThemeData(
         primarySwatch: Colors.red,
+        fontFamily: 'Nunito',
       ),
       onGenerateRoute: (settings) {
         if (settings.name == '/') {

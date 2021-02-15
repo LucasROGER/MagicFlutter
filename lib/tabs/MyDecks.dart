@@ -17,8 +17,8 @@ class _MyDecksViewState extends State<MyDecksView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: DualList<Deck>(
+    return Scaffold(
+        body: DualList<Deck>(
           list: decks,
           renderItem: (context, i, item) {
             return Deck(
@@ -27,6 +27,12 @@ class _MyDecksViewState extends State<MyDecksView> {
               },
             );
           },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print('test');
+          },
+          child: Icon(Icons.add),
         ),
     );
   }

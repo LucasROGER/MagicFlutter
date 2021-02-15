@@ -19,6 +19,21 @@ class DualList<T> extends StatefulWidget {
 class _DualListState extends State<DualList> {
   @override
   Widget build(BuildContext context) {
+    if (widget.list == null || widget.list.length == 0) {
+      return Container(
+        color: Colors.white,
+        child: Container(
+          child: Center(
+            child: Text(
+              'Empty',
+              style: TextStyle(
+                color: Color.fromARGB(127, 127, 127, 127),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
     return ListView.builder(
         padding: EdgeInsets.all(16.0),
         itemCount: widget.list.length,
