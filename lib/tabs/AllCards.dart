@@ -1,8 +1,9 @@
 import 'package:MagicFlutter/components/ActionItem.dart';
+import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/data.dart';
+import 'package:MagicFlutter/utils/Storage.dart';
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
 
 class AllCardsView extends StatefulWidget {
   @override
@@ -10,57 +11,48 @@ class AllCardsView extends StatefulWidget {
 }
 
 class _AllCardsViewState extends State<AllCardsView> {
-  final LocalStorage storage = new LocalStorage('my_collection');
+  final Storage storage = new Storage();
   List allCards = [];
 
-  @override
-  void initState() {
-    _getAllCards();
-    super.initState();
-  }
-
-  void _getAllCards() {
-    List allCardsList = cardList;
-    allCardsList.map((item) {
-      item['count'] = 0;
-    });
+  void _getAllCards() async {
+    List myCards = await storage.collection.getItem('cards');
+    if (myCards == null) {
+      myCards = [];
+    }
+    List allCardsList = [];
+    for (int i = 0; i < cardList.length; i++) {
+      bool found = false;
+      for (int j = 0; j < myCards.length; j++) {
+        if (myCards[j]['identifiers']['multiverseId'] ==
+            cardList[i]['identifiers']['multiverseId']) {
+          cardList[i]['count'] = myCards[j]['count'];
+          found = true;
+        }
+      }
+      ;
+      if (found == false) {
+        cardList[i]['count'] = 0;
+      } else {
+        found = false;
+      }
+      allCardsList.add(cardList[i]);
+    }
     setState(() {
       this.allCards = allCardsList;
     });
   }
 
-  void _saveToStorage(item) async {
-    var myCards = await storage.getItem('cards');
-    if (myCards == null) {
-      myCards = [];
-    }
-    var newItem = item;
-    int index = -1;
-    bool found = false;
-    for (int i = 0; i < myCards.length; i++) {
-      if (myCards[i]['identifiers']['multiverseId'] ==
-          newItem['identifiers']['multiverseId']) {
-        newItem = myCards[i];
-        found = true;
-        index = i;
-        break;
-      }
-    }
-    if (index == -1 || found == false) {
-      newItem['count'] = 1;
-      myCards.add(newItem);
-    } else {
-      newItem['count'] += 1;
-      myCards[index] = newItem;
-    }
-    await storage.setItem('cards', myCards);
+  @override
+  initState() {
+    _getAllCards();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: DualList<dynamic>(
-        list: allCards,
+        list: this.allCards,
         renderItem: (BuildContext context, int index, dynamic item) {
           return Container(
               padding: EdgeInsets.all(5),
@@ -70,28 +62,8 @@ class _AllCardsViewState extends State<AllCardsView> {
                     context: context,
                     barrierDismissible: true, // user must tap button!
                     builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(item['name']),
-                        content: SingleChildScrollView(
-                          child: ListBody(
-                            children: <Widget>[
-                              Image(
-                                image: NetworkImage(x
-                                    "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
-                                        item['identifiers']['multiverseId']),
-                              ),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text('Approve'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
+                      return CardDialog(
+                          item: item, addCallback: storage.addToCollection);
                     },
                   );
                 },
@@ -103,7 +75,7 @@ class _AllCardsViewState extends State<AllCardsView> {
                 menuCallbacks: [
                   () {},
                   () {
-                    _saveToStorage(item);
+                    storage.addToCollection(item);
                   },
                   () {},
                 ],

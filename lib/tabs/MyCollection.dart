@@ -1,7 +1,8 @@
 import 'package:MagicFlutter/components/ActionItem.dart';
+import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
+import 'package:MagicFlutter/utils/Storage.dart';
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
 
 class MyCollectionView extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class MyCollectionView extends StatefulWidget {
 }
 
 class _MyCollectionViewState extends State<MyCollectionView> {
-  final LocalStorage storage = new LocalStorage('my_collection');
+  final Storage storage = new Storage();
   List cardList = [];
 
   @override
@@ -18,55 +19,32 @@ class _MyCollectionViewState extends State<MyCollectionView> {
     super.initState();
   }
 
-  void _getMyCollection() {
-    List myCards = storage.getItem('cards');
+  void _getMyCollection() async {
+    List myCards = await storage.collection.getItem('cards');
     setState(() {
       this.cardList = myCards;
     });
   }
 
   void _removeFromCollection(item) async {
-    List myCards = await storage.getItem('cards');
-    myCards.remove(item);
-    await storage.setItem('cards', myCards);
+    List myCards = await storage.removeFromCollection(item);
     setState(() {
       this.cardList = myCards;
     });
   }
 
   void _removeOneFromCollection(item) async {
-    List myCards = await storage.getItem('cards');
-    int i = 0;
-    for (; i < myCards.length; i++) {
-      if (myCards[i] == item) {
-        myCards[i]['count'] -= 1;
-        if (myCards[i]['count'] == 0) {
-          myCards.remove(item);
-          await storage.setItem('cards', myCards);
-        }
-      }
-    }
+    List myCards = await storage.removeOneFromCollection(item);
     setState(() {
       this.cardList = myCards;
     });
   }
 
   void _addOneFromCollection(item) async {
-    List myCards = await storage.getItem('cards');
-    int i = 0;
-    for (; i < myCards.length; i++) {
-      if (myCards[i] == item) {
-        myCards[i]['count'] += 1;
-      }
-    }
-    ;
+    List myCards = await storage.addOneToCollection(item);
     setState(() {
       this.cardList = myCards;
     });
-  }
-
-  void _deleteCollection() {
-    storage.clear();
   }
 
   @override
@@ -79,7 +57,17 @@ class _MyCollectionViewState extends State<MyCollectionView> {
               padding: EdgeInsets.all(5),
               child: ActionItem(
                 callback: () {
-                  print(item['name']);
+                  showDialog<void>(
+                    context: context,
+                    barrierDismissible: true, // user must tap button!
+                    builder: (BuildContext context) {
+                      return CardDialog(
+                          item: item,
+                          addCallback: _addOneFromCollection,
+                          removeOneCallback: _removeOneFromCollection,
+                          removeCallback: _removeFromCollection);
+                    },
+                  );
                 },
                 item: new Stack(children: <Widget>[
                   new Image(
