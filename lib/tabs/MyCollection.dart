@@ -21,6 +21,9 @@ class _MyCollectionViewState extends State<MyCollectionView> {
 
   void _getMyCollection() async {
     List myCards = await storage.collection.getItem('cards');
+    if (myCards == null) {
+      myCards = [];
+    }
     setState(() {
       this.cardList = myCards;
     });

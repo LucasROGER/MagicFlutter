@@ -11,7 +11,7 @@ class Storage {
     for (; i < myCards.length; i++) {
       if (myCards[i] == item) {
         myCards[i]['count'] -= 1;
-        if (myCards[i]['count'] == 0) {
+        if (myCards[i]['count'] <= 0) {
           myCards.remove(item);
           await collection.setItem('cards', myCards);
         }
@@ -67,7 +67,7 @@ class Storage {
     return myCards;
   }
 
-  void deleteCollection() async {
-    await collection.clear();
+  void deleteCollection() {
+    collection.clear();
   }
 }
