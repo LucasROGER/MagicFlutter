@@ -76,7 +76,7 @@ class _AllCardsViewState extends State<AllCardsView> {
                           child: ListBody(
                             children: <Widget>[
                               Image(
-                                image: NetworkImage(x
+                                image: NetworkImage(
                                     "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
                                         item['identifiers']['multiverseId']),
                               ),
