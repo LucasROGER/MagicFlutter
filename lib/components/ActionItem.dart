@@ -30,7 +30,6 @@ class _ActionItemState extends State<ActionItem> {
             _tapPosition & const Size(40, 40), // smaller rect, the touch area
             Offset.zero & overlay.size // Bigger rect, the entire screen
             ));
-    print(index);
     if (index == null) {
       return;
     }
