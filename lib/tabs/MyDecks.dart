@@ -13,15 +13,19 @@ class MyDecksView extends StatefulWidget {
 
 class _MyDecksViewState extends State<MyDecksView> {
 
-  final decks = <String>["test", "test", "test", "test", "test", "test", "test", "test"];
+  final decks = <Deck>[Deck(), Deck(), Deck()];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: DualList<String>(
+        child: DualList<Deck>(
           list: decks,
           renderItem: (context, i, item) {
-            return Text('item');
+            return Deck(
+              onTap: () {
+                Navigator.pushNamed(context, '/deck/' + i.toString());
+              },
+            );
           },
         ),
     );
