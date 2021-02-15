@@ -3,7 +3,6 @@ import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/data.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
-import 'dart:convert';
 
 class AllCardsView extends StatefulWidget {
   @override
@@ -39,7 +38,8 @@ class _AllCardsViewState extends State<AllCardsView> {
     int index = -1;
     bool found = false;
     for (int i = 0; i < myCards.length; i++) {
-      if (myCards[i]['identifiers']['multiverseId'] == newItem['identifiers']['multiverseId']) {
+      if (myCards[i]['identifiers']['multiverseId'] ==
+          newItem['identifiers']['multiverseId']) {
         newItem = myCards[i];
         found = true;
         index = i;
@@ -66,7 +66,34 @@ class _AllCardsViewState extends State<AllCardsView> {
               padding: EdgeInsets.all(5),
               child: ActionItem(
                 callback: () {
-                  print(item['name']);
+                  showDialog<void>(
+                    context: context,
+                    barrierDismissible: true, // user must tap button!
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(item['name']),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: <Widget>[
+                              Image(
+                                image: NetworkImage(x
+                                    "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
+                                        item['identifiers']['multiverseId']),
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('Approve'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
                 item: Image(
                   image: NetworkImage(
@@ -74,13 +101,11 @@ class _AllCardsViewState extends State<AllCardsView> {
                           item['identifiers']['multiverseId']),
                 ),
                 menuCallbacks: [
-                      () {
-                  },
-                      () {
+                  () {},
+                  () {
                     _saveToStorage(item);
                   },
-                      () {
-                  },
+                  () {},
                 ],
                 menuItems: <PopupMenuEntry>[
                   PopupMenuItem(
