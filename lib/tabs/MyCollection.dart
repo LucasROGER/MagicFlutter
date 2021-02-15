@@ -18,11 +18,8 @@ class _MyCollectionViewState extends State<MyCollectionView> {
     super.initState();
   }
 
-  _getMyCollection() {
+  void _getMyCollection() {
     List myCards = storage.getItem('cards');
-    myCards.map((i) {
-      print(i['count']);
-    });
     setState(() {
       this.cardList = myCards;
     });
@@ -49,7 +46,6 @@ class _MyCollectionViewState extends State<MyCollectionView> {
         }
       }
     }
-    ;
     setState(() {
       this.cardList = myCards;
     });
