@@ -50,7 +50,7 @@ class Storage {
     for (int i = 0; i < myCards.length; i++) {
       if (myCards[i]['identifiers']['multiverseId'] ==
           newItem['identifiers']['multiverseId']) {
-        newItem = myCards[i];
+        newItem['count'] = myCards[i]['count'];
         found = true;
         index = i;
         break;
