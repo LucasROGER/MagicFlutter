@@ -46,7 +46,7 @@ class _DeckScreenState extends State<DeckScreen> {
 
   void _removeDeck() {
     storage.removeDeck(widget.id);
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(true);
   }
 
   void _removeOneToDeck(item) {

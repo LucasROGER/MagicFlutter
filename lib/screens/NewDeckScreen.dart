@@ -40,7 +40,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
             ElevatedButton(
               onPressed: () {
                 storage.createDeck(deckName.text, deckDescription.text, []);
-                Navigator.pop(context);
+                Navigator.of(context).pop(true);
               },
               child: Text('Create')
             ),
