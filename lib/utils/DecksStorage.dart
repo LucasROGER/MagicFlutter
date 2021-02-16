@@ -12,25 +12,30 @@ class DeckStorage {
     else
       return myDecks;
   }
+
   void set(value) async {
     await storage.setItem('decks', value);
+  }
+
+  void removeDeck(id) async {
+    List myDecks = await get();
+    for (int i = 0; i < myDecks.length ; i++) {
+      if (myDecks[i]['id'] == id) {
+        myDecks.remove(myDecks[i]);
+        set(myDecks);
+        return;
+      }
+    }
   }
 
   //return the deck id
   Future<int> createDeck(String name, String description, List cards) async {
     List myDecks = await get();
-    String colors = "";
     int id = DateTime.now().millisecondsSinceEpoch;
 
     if (cards == null) cards = [];
+    String colors = getColorIdentity(cards);
 
-    for (int i = 0; i < cards.length; i++) {
-      for (int j = 0; j < cards[i]['colorIdentity'].length; j++) {
-        if (colors.contains(cards[i]['colorIdentity'][j], 0) == false) {
-          colors += cards[i]['colorIdentity'][j];
-        }
-      }
-    }
 
     var newDeck = {
       "name": name,
@@ -46,7 +51,7 @@ class DeckStorage {
 
   void addToDeck(dynamic item, int deckId) async {
     List myDecks = await get();
-    dynamic currentDeck = null;
+    dynamic currentDeck;
     int deckIndex = -1;
     for (int i = 0; i < myDecks.length; i++) {
       if (myDecks[i]['id'] == deckId) {
@@ -56,14 +61,14 @@ class DeckStorage {
       }
     }
     if (deckIndex == -1 || currentDeck == null) return;
-    var newItem = item;
+    dynamic newItem = item;
     bool found = false;
     int cardIndex = -1;
-    currentDeck['cards'] = currentDeck['cards'];
-    for (int i = 0; i < currentDeck['cards'].length; i++) {
-      if (currentDeck['cards'][i]['identifiers']['multiverseId'] ==
+    dynamic cards = currentDeck['cards'];
+    for (int i = 0; i < cards.length; i++) {
+      if (cards[i]['identifiers']['multiverseId'] ==
           item['identifiers']['multiverseId']) {
-        newItem['count'] = currentDeck['cards'][i]['count'];
+        newItem['count'] = cards[i]['count'];
         found = true;
         cardIndex = i;
         break;
@@ -77,6 +82,45 @@ class DeckStorage {
       myDecks[deckIndex]['cards'][cardIndex] = newItem;
     }
     set(myDecks);
+  }
+
+  void removeToDeck(dynamic item, int deckId) async {
+    List myDecks = await get();
+    dynamic currentDeck = null;
+    int deckIndex = -1;
+    for (int i = 0; i < myDecks.length; i++) {
+      if (myDecks[i]['id'] == deckId) {
+        currentDeck = myDecks[i];
+        deckIndex = i;
+        break;
+      }
+    }
+    if (deckIndex == -1 || currentDeck == null) return;
+    for (int i = 0; i < currentDeck['cards'].length; i++) {
+      if (currentDeck['cards'][i]['identifiers']['multiverseId'] ==
+          item['identifiers']['multiverseId']) {
+        if (currentDeck['cards'][i]['count'] == null)
+          currentDeck['cards'][i]['count'] = 0;
+        currentDeck['cards'][i]['count'] -= 1;
+        if (currentDeck['cards'][i]['count'] <= 0) {
+          currentDeck['cards'].remove(currentDeck['cards'][i]);
+        }
+        break;
+      }
+    }
+    set(myDecks);
+  }
+
+  String getColorIdentity(List cards) {
+    String colors = "";
+    for (int i = 0; i < cards.length; i++) {
+      for (int j = 0; j < cards[i]['colorIdentity'].length; j++) {
+        if (colors.contains(cards[i]['colorIdentity'][j], 0) == false) {
+          colors += cards[i]['colorIdentity'][j];
+        }
+      }
+    }
+    return colors;
   }
 
   void clear() {
