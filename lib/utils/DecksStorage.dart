@@ -44,11 +44,40 @@ class DeckStorage {
     return id;
   }
 
-  Future<List> addToDeck(dynamic item, int deckId) async {
+  void addToDeck(dynamic item, int deckId) async {
     List myDecks = await get();
-
-    for (int i = 0; i < myDecks.length; i++) {}
-    return myDecks;
+    dynamic currentDeck = null;
+    int deckIndex = -1;
+    print(myDecks.length);
+    for (int i = 0; i < myDecks.length; i++) {
+      if (myDecks[i]['id'] == deckId) {
+        currentDeck = myDecks[i];
+        deckIndex = i;
+        break;
+      }
+    }
+    print(currentDeck);
+    if (deckIndex == -1 || currentDeck == null) return;
+    var newItem = item;
+    bool found = false;
+    int cardIndex = -1;
+    currentDeck['cards'] = jsonDecode(currentDeck['cards']);
+    for (int i = 0; i < currentDeck['cards'].length; i++) {
+      if (currentDeck['cards'][i]['identifiers']['multiverseId'] ==
+          item['identifiers']['multiverseId']) {
+        newItem['count'] = currentDeck['cards'][i]['count'];
+        found = true;
+        cardIndex = i;
+        break;
+      }
+    }
+    if (cardIndex == -1 || found == false) {
+      myDecks[deckIndex]['cards'].add(newItem);
+    } else {
+      newItem['count'] += 1;
+      myDecks[deckIndex]['cards'][cardIndex] = newItem;
+    }
+    set(myDecks);
   }
 
   void clear() {

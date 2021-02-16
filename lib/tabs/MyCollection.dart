@@ -1,6 +1,7 @@
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
+import 'package:MagicFlutter/components/SelectDeckDialog.dart';
 import 'package:MagicFlutter/utils/CollectionStorage.dart';
 import 'package:flutter/material.dart';
 
@@ -103,7 +104,15 @@ class _MyCollectionViewState extends State<MyCollectionView> {
                           )))
                 ]),
                 menuCallbacks: [
-                  () {},
+                  () {
+                    showDialog<void>(
+                      context: context,
+                      barrierDismissible: true, // user must tap button!
+                      builder: (BuildContext context) {
+                        return SelectDeckDialog(toAdd: item);
+                      },
+                    );
+                  },
                   () {
                     _addOneFromCollection(item);
                   },
