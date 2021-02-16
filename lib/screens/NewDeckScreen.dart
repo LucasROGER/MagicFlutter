@@ -10,24 +10,43 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Create new deck'),
+      ),
       body: SafeArea(
-        child :Center(
-          child: Column(
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Deck name'
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Center(
+            child: Column(
+
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                    border: OutlineInputBorder(),
+                  ),
+
                 ),
-              ),
-              FlatButton(
-                onPressed: () {
-                  print('create deck');
-                },
-                child: Text('Create'),
-              )
-            ],
-          ),
-        )
+                SizedBox(height: 10),
+                TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 7,
+                  decoration: InputDecoration(
+                    labelText: 'Description',
+                    border: const OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    print('create deck');
+                  },
+                  child: Text('Create')
+                ),
+              ],
+            ),
+          )
+        ),
       ),
     );
   }
