@@ -21,6 +21,7 @@ class _ActionItemState extends State<ActionItem> {
   }
 
   Future<void> _showCustomMenu() async {
+    if (widget.menuItems == null)  return;
     final RenderBox overlay = Overlay.of(context).context.findRenderObject();
 
     final index = await showMenu(

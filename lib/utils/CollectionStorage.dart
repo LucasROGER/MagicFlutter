@@ -1,3 +1,4 @@
+import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:localstorage/localstorage.dart';
 
 typedef storageCallback = void Function(dynamic item);
