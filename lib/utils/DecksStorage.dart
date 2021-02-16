@@ -56,12 +56,11 @@ class DeckStorage {
         break;
       }
     }
-    print(currentDeck);
     if (deckIndex == -1 || currentDeck == null) return;
     var newItem = item;
     bool found = false;
     int cardIndex = -1;
-    currentDeck['cards'] = jsonDecode(currentDeck['cards']);
+    currentDeck['cards'] = currentDeck['cards'];
     for (int i = 0; i < currentDeck['cards'].length; i++) {
       if (currentDeck['cards'][i]['identifiers']['multiverseId'] ==
           item['identifiers']['multiverseId']) {
@@ -72,6 +71,7 @@ class DeckStorage {
       }
     }
     if (cardIndex == -1 || found == false) {
+      newItem['count'] = 1;
       myDecks[deckIndex]['cards'].add(newItem);
     } else {
       newItem['count'] += 1;

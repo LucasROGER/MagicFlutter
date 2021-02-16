@@ -122,7 +122,6 @@ class _MyCollectionViewState extends State<MyCollectionView> {
                   () {
                     _removeFromCollection(item);
                   },
-                  () {},
                 ],
                 menuItems: <PopupMenuEntry>[
                   PopupMenuItem(
@@ -133,11 +132,11 @@ class _MyCollectionViewState extends State<MyCollectionView> {
                           children: <Widget>[
                             Container(
                               padding: EdgeInsets.all(10),
-                              child: Icon(Icons.visibility),
+                              child: Icon(Icons.add_circle),
                             ),
                             Container(
                               padding: EdgeInsets.all(10),
-                              child: Text("See full screen"),
+                              child: Text("Add to a deck"),
                             )
                           ],
                         ),
@@ -201,25 +200,6 @@ class _MyCollectionViewState extends State<MyCollectionView> {
                       ],
                     ),
                   ),
-                  PopupMenuItem(
-                    value: 4,
-                    child: Wrap(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              child: Icon(Icons.add_circle),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              child: Text("Add to a deck"),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ));
         },
