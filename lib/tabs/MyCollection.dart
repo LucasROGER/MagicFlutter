@@ -1,7 +1,7 @@
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
-import 'package:MagicFlutter/utils/Storage.dart';
+import 'package:MagicFlutter/utils/CollectionStorage.dart';
 import 'package:flutter/material.dart';
 
 class MyCollectionView extends StatefulWidget {
@@ -10,7 +10,7 @@ class MyCollectionView extends StatefulWidget {
 }
 
 class _MyCollectionViewState extends State<MyCollectionView> {
-  final Storage storage = new Storage();
+  final CollectionStorage storage = new CollectionStorage();
   List cardList = [];
 
   @override
@@ -20,10 +20,7 @@ class _MyCollectionViewState extends State<MyCollectionView> {
   }
 
   void _getMyCollection() async {
-    List myCards = await storage.collection.getItem('cards');
-    if (myCards == null) {
-      myCards = [];
-    }
+    List myCards = await storage.get();
     setState(() {
       this.cardList = myCards;
     });
