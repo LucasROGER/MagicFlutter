@@ -30,7 +30,7 @@ class _MyDecksViewState extends State<MyDecksView> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            print('test');
+            Navigator.pushNamed(context, '/deck/create');
           },
           child: Icon(Icons.add),
         ),

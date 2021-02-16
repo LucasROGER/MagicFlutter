@@ -1,5 +1,6 @@
 import 'package:MagicFlutter/screens/CardScreen.dart';
 import 'package:MagicFlutter/screens/DeckScreen.dart';
+import 'package:MagicFlutter/screens/NewDeckScreen.dart';
 import 'package:MagicFlutter/screens/NotFound.dart';
 import 'package:MagicFlutter/tabs/AllCards.dart';
 import 'package:MagicFlutter/tabs/MyCollection.dart';
@@ -25,13 +26,22 @@ class Navigation extends StatelessWidget {
           return MaterialPageRoute(builder: (context) => NavigationBarWidget());
         }
 
-        // Handle '/deck/:id'
+        // Handle '/deck/create'
         var uri = Uri.parse(settings.name);
+        if (uri.pathSegments.length == 2 &&
+            uri.pathSegments.first == 'deck' &&
+            uri.pathSegments.last == 'create') {
+          return MaterialPageRoute(builder: (context) => NewDeckScreen());
+        }
+
+        // Handle '/deck/:id'
+        uri = Uri.parse(settings.name);
         if (uri.pathSegments.length == 2 &&
             uri.pathSegments.first == 'deck') {
           var id = int.parse(uri.pathSegments[1]);
           return MaterialPageRoute(builder: (context) => DeckScreen(id: id));
         }
+
 
         return MaterialPageRoute(builder: (context) => NotFound());
       },

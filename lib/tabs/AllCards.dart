@@ -55,7 +55,7 @@ class _AllCardsViewState extends State<AllCardsView> {
           return Container(
               padding: EdgeInsets.all(5),
               child: ActionItem(
-                callback: () {
+                onTap: () {
                   showDialog<void>(
                     context: context,
                     barrierDismissible: true, // user must tap button!
