@@ -15,7 +15,7 @@ class DeckStorage {
     List myDecks = await get();
 
     for (int i = 0; i < myDecks.length; i++) {
-      
+
     }
   }
 
