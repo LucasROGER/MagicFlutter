@@ -1,5 +1,6 @@
 import 'package:MagicFlutter/screens/CardScreen.dart';
 import 'package:MagicFlutter/screens/DeckScreen.dart';
+import 'package:MagicFlutter/screens/DeckStatsScreen.dart';
 import 'package:MagicFlutter/screens/NewDeckScreen.dart';
 import 'package:MagicFlutter/screens/NotFound.dart';
 import 'package:MagicFlutter/tabs/AllCards.dart';
@@ -40,6 +41,15 @@ class Navigation extends StatelessWidget {
             uri.pathSegments.first == 'deck') {
           var id = int.parse(uri.pathSegments[1]);
           return MaterialPageRoute(builder: (context) => DeckScreen(id: id));
+        }
+
+        // Handle '/deck/:id/stats'
+        uri = Uri.parse(settings.name);
+        if (uri.pathSegments.length == 3 &&
+            uri.pathSegments.first == 'deck' &&
+            uri.pathSegments.last == 'stats') {
+          var id = int.parse(uri.pathSegments[1]);
+          return MaterialPageRoute(builder: (context) => DeckStatsScreen(id: id));
         }
 
 

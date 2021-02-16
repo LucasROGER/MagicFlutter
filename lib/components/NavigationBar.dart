@@ -30,8 +30,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
         return PreferredSize(
             preferredSize: Size.fromHeight(40),
             child: AppBar(
-                backgroundColor: Colors.redAccent,
-                title: Text('MagicFlutter'),
+                title: Text('Magic Flutter'),
             ),
         );
     }
