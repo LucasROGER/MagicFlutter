@@ -13,6 +13,10 @@ class CollectionStorage {
       return myCollection;
   }
 
+  void set(value) async {
+    await storage.setItem('cards', value);
+  }
+
   Future<List> removeOneFromCollection(dynamic item) async {
     List myCards = await get();
     int i = 0;
@@ -21,7 +25,7 @@ class CollectionStorage {
         myCards[i]['count'] -= 1;
         if (myCards[i]['count'] <= 0) {
           myCards.remove(item);
-          await storage.setItem('cards', myCards);
+          set(myCards);
         }
       }
     }
@@ -36,14 +40,14 @@ class CollectionStorage {
         myCards[i]['count'] += 1;
       }
     }
-    await storage.setItem('cards', myCards);
+    set(myCards);
     return myCards;
   }
 
   Future<List> removeFromCollection(dynamic item) async {
     List myCards = await get();
     myCards.remove(item);
-    await storage.setItem('cards', myCards);
+    set(myCards);
     return myCards;
   }
 
@@ -71,7 +75,7 @@ class CollectionStorage {
       newItem['count'] += 1;
       myCards[index] = newItem;
     }
-    await storage.setItem('cards', myCards);
+    set(myCards);
     return myCards;
   }
 

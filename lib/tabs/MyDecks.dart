@@ -1,5 +1,6 @@
 import 'package:MagicFlutter/components/Deck.dart';
 import 'package:MagicFlutter/components/DualList.dart';
+import 'package:MagicFlutter/utils/DecksStorage.dart';
 import 'package:flutter/material.dart';
 
 class MyDecksView extends StatefulWidget {
@@ -12,18 +13,33 @@ class MyDecksView extends StatefulWidget {
 }
 
 class _MyDecksViewState extends State<MyDecksView> {
+  final DeckStorage storage = new DeckStorage();
+  List deckList = [];
 
-  final decks = <Deck>[Deck(), Deck(), Deck()];
+  void _getDecks() async {
+    List decks =  await storage.get();
+    print(decks);
+    setState(() {
+      this.deckList = decks;
+    });
+  }
+
+  @override
+  void initState() {
+    _getDecks();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: DualList<Deck>(
-          list: decks,
+        body: DualList<dynamic>(
+          list: deckList,
           renderItem: (context, i, item) {
             return Deck(
               onTap: () {
-                Navigator.pushNamed(context, '/deck/' + i.toString());
+                Navigator.pushNamed(context, '/deck/' + item['id'].toString());
               },
             );
           },
