@@ -47,26 +47,25 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
           textAlign: TextAlign.center,
         ),
         content: Container(
-          child: Image(
-            fit: BoxFit.contain,
-            image: NetworkImage(
-                "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
-                    widget.item['identifiers']['multiverseId']),
-          ),
+          child: ListView.builder(
+              padding: EdgeInsets.all(16.0),
+              itemCount: this.deckList.length,
+              itemBuilder: (ctxt, i) {
+                return Image(
+                  fit: BoxFit.contain,
+                  image: NetworkImage(
+                      "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
+                          widget.item['identifiers']['multiverseId']),
+                );
+              }),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.remove_circle),
-              onPressed: () {
-
-              }),
+          IconButton(icon: Icon(Icons.remove_circle), onPressed: () {}),
           TextButton(
-            child: Text('Dismiss'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ]
-    );
+              child: Text('Dismiss'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+        ]);
   }
 }
