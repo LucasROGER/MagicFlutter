@@ -1,3 +1,4 @@
+import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/screens/DeckScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +18,9 @@ class _DeckState extends State<Deck> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GestureDetector(
+      child: ActionItem(
         onTap: widget.onTap,
-        child: Container (
+        item: Container (
           margin: const EdgeInsets.all(10.0),
           child: Column(
             children: [
