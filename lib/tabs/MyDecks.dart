@@ -37,15 +37,18 @@ class _MyDecksViewState extends State<MyDecksView> {
           list: deckList,
           renderItem: (context, i, item) {
             return Deck(
-              onTap: () {
-                Navigator.pushNamed(context, '/deck/' + item['id'].toString());
+              onTap: () async {
+                if (await Navigator.pushNamed(context, '/deck/' + item['id'].toString()) == true)
+                  _getDecks();
               },
             );
           },
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/deck/create');
+          onPressed: () async {
+            if (await Navigator.pushNamed(context, '/deck/create') == true)
+              _getDecks();
+
           },
           child: Icon(Icons.add),
         ),

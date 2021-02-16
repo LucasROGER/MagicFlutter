@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
@@ -30,7 +32,7 @@ class _DeckScreenState extends State<DeckScreen> {
         var tmp = allDecks[i];
         setState(() {
           this.deck = tmp;
-          this.cardList = tmp['cards'];
+          this.cardList = jsonDecode(tmp['cards']);
         });
         break;
       }
@@ -44,7 +46,7 @@ class _DeckScreenState extends State<DeckScreen> {
 
   void _removeDeck() {
     storage.removeDeck(widget.id);
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(true);
   }
 
   void _removeOneToDeck(item) {

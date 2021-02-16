@@ -36,6 +36,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                 onPressed: () {
                   storage.createDeck('test', "description", [
                   ]);
+                  Navigator.of(context).pop(true);
                 },
                 child: Text('Create')
             ),
