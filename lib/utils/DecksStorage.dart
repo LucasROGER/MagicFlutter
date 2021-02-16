@@ -48,7 +48,6 @@ class DeckStorage {
     List myDecks = await get();
     dynamic currentDeck = null;
     int deckIndex = -1;
-    print(myDecks.length);
     for (int i = 0; i < myDecks.length; i++) {
       if (myDecks[i]['id'] == deckId) {
         currentDeck = myDecks[i];

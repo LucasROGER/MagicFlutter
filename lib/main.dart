@@ -7,14 +7,20 @@ import 'package:MagicFlutter/tabs/AllCards.dart';
 import 'package:MagicFlutter/tabs/MyCollection.dart';
 import 'package:MagicFlutter/tabs/MyDecks.dart';
 import 'package:MagicFlutter/tabs/MyProfile.dart';
+import 'package:MagicFlutter/utils/CollectionStorage.dart';
+import 'package:MagicFlutter/utils/DecksStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/components/NavigationBar.dart';
 
 void main() => runApp(Navigation());
 
 class Navigation extends StatelessWidget {
+  CollectionStorage collection = new CollectionStorage();
+  DeckStorage decks = new DeckStorage();
   @override
   Widget build(BuildContext context) {
+    decks.get();
+    collection.get();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MagicFlutter',

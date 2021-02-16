@@ -21,15 +21,12 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
 
   void _getMyDecks() async {
     List decks = await storage.get();
-    print(decks);
-    print(decks.length);
     setState(() {
       this.deckList = decks;
     });
   }
 
   void selectDeck(deck) async {
-    print(deck['id']);
     await storage.addToDeck(widget.toAdd, deck['id']);
   }
 
@@ -62,7 +59,7 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
           textAlign: TextAlign.center,
         ),
         content: Container(
-          width: 5000.0,
+          width: MediaQuery.of(context).size.width,
           child: ListView.builder(
               scrollDirection: Axis.vertical,
               padding: EdgeInsets.all(16.0),

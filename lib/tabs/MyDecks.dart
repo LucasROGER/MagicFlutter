@@ -18,7 +18,6 @@ class _MyDecksViewState extends State<MyDecksView> {
 
   void _getDecks() async {
     List decks =  await storage.get();
-    print(decks);
     setState(() {
       this.deckList = decks;
     });
