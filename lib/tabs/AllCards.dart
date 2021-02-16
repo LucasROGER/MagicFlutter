@@ -2,6 +2,7 @@ import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/data.dart';
+import 'package:MagicFlutter/utils/CollectionStorage.dart';
 import 'package:MagicFlutter/utils/Storage.dart';
 import 'package:flutter/material.dart';
 
@@ -11,14 +12,11 @@ class AllCardsView extends StatefulWidget {
 }
 
 class _AllCardsViewState extends State<AllCardsView> {
-  final Storage storage = new Storage();
+  final CollectionStorage storage = new CollectionStorage();
   List allCards = [];
 
   void _getAllCards() async {
-    List myCards = await storage.collection.getItem('cards');
-    if (myCards == null) {
-      myCards = [];
-    }
+    List myCards = await storage.get();
     List allCardsList = [];
     for (int i = 0; i < cardList.length; i++) {
       bool found = false;
