@@ -37,6 +37,7 @@ class _MyDecksViewState extends State<MyDecksView> {
           list: deckList,
           renderItem: (context, i, item) {
             return Deck(
+              deck: item,
               onTap: () {
                 Navigator.pushNamed(context, '/deck/' + item['id'].toString());
               },

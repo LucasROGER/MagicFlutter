@@ -44,9 +44,10 @@ class DeckStorage {
     return id;
   }
 
-  void addToDeck(dynamic item, int deckId) async {
+  Future addToDeck(dynamic item, int deckId) async {
     List myDecks = await get();
-    dynamic currentDeck = null;
+    dynamic currentDeck;
+    currentDeck = null;
     int deckIndex = -1;
     for (int i = 0; i < myDecks.length; i++) {
       if (myDecks[i]['id'] == deckId) {
@@ -56,10 +57,9 @@ class DeckStorage {
       }
     }
     if (deckIndex == -1 || currentDeck == null) return;
-    var newItem = item;
+    dynamic newItem = item;
     bool found = false;
     int cardIndex = -1;
-    currentDeck['cards'] = currentDeck['cards'];
     for (int i = 0; i < currentDeck['cards'].length; i++) {
       if (currentDeck['cards'][i]['identifiers']['multiverseId'] ==
           item['identifiers']['multiverseId']) {

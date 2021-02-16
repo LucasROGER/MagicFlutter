@@ -9,6 +9,9 @@ class NewDeckScreen extends StatefulWidget {
 
 class _NewDeckScreenState extends State<NewDeckScreen> {
   DeckStorage storage = new DeckStorage();
+  TextEditingController deckName = new TextEditingController();
+  TextEditingController deckDescription = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Screen(
@@ -17,6 +20,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
         child: Column(
           children: [
             TextField(
+              controller: deckName,
               decoration: InputDecoration(
                 labelText: 'Name',
                 border: OutlineInputBorder(),
@@ -24,6 +28,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
             ),
             SizedBox(height: 10),
             TextField(
+              controller: deckDescription,
               keyboardType: TextInputType.multiline,
               maxLines: 7,
               decoration: InputDecoration(
@@ -33,11 +38,10 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
             ),
             SizedBox(height: 10),
             ElevatedButton(
-                onPressed: () {
-                  storage.createDeck('test', "description", [
-                  ]);
-                },
-                child: Text('Create')
+              onPressed: () {
+                storage.createDeck(deckName.text, deckDescription.text, []);
+              },
+              child: Text('Create')
             ),
           ],
         ),

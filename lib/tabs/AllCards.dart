@@ -4,7 +4,6 @@ import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
 import 'package:MagicFlutter/data.dart';
 import 'package:MagicFlutter/utils/CollectionStorage.dart';
-import 'package:MagicFlutter/utils/Storage.dart';
 import 'package:flutter/material.dart';
 
 class AllCardsView extends StatefulWidget {
@@ -28,7 +27,6 @@ class _AllCardsViewState extends State<AllCardsView> {
           found = true;
         }
       }
-      ;
       if (found == false) {
         cardList[i]['count'] = 0;
       } else {

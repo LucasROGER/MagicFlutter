@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/screens/base/Screen.dart';
 import 'package:MagicFlutter/utils/DecksStorage.dart';

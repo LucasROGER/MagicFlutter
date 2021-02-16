@@ -1,13 +1,14 @@
 import 'package:MagicFlutter/components/ActionItem.dart';
-import 'package:MagicFlutter/screens/DeckScreen.dart';
 import 'package:flutter/material.dart';
 
 class Deck extends StatefulWidget {
   final GestureTapCallback onTap;
+  final dynamic deck;
 
   Deck({
     Key key,
     this.onTap,
+    this.deck,
   }) : super(key: key);
 
   @override
@@ -21,10 +22,10 @@ class _DeckState extends State<Deck> {
       child: ActionItem(
         onTap: widget.onTap,
         item: Container (
-          margin: const EdgeInsets.all(10.0),
+          margin: EdgeInsets.all(10),
           child: Column(
             children: [
-              Text('name'),
+              Text(widget.deck == null ? 'name' : widget.deck['name']),
               Image.network('http://placehold.it/210x297')
             ],
           ),

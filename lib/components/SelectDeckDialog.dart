@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'ActionItem.dart';
 
 class SelectDeckDialog extends StatefulWidget {
-  var toAdd;
+  final dynamic toAdd;
 
   SelectDeckDialog({
     Key key,
@@ -55,7 +55,7 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
         titlePadding: EdgeInsets.all(5),
         contentPadding: EdgeInsets.all(5),
         title: Text(
-          'Add' + widget?.toAdd['name'],
+          'Add ' + widget?.toAdd['name'],
           textAlign: TextAlign.center,
         ),
         content: Container(
