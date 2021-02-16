@@ -20,6 +20,8 @@ class CardDialog extends StatefulWidget {
 }
 
 class _CardDialogState extends State<CardDialog> {
+  int count = 0;
+
   List<Widget> getActionButton() {
     List<Widget> list = [];
     if (widget.addCallback != null) {
@@ -27,7 +29,9 @@ class _CardDialogState extends State<CardDialog> {
           icon: Icon(Icons.add_circle),
           onPressed: () {
             widget.addCallback(widget.item);
-            widget.item['count'] += 1;
+            setState(() {
+              this.count += 1;
+            });
           }));
     }
     if (widget.removeOneCallback != null) {
@@ -35,8 +39,10 @@ class _CardDialogState extends State<CardDialog> {
           icon: Icon(Icons.remove_circle),
           onPressed: () {
             widget.removeOneCallback(widget.item);
-            widget.item['count'] -= 1;
-            if (widget.item['count'] == 0) {
+            setState(() {
+              this.count -= 1;
+            });
+            if (widget.item['count'] - 1 <= 0) {
               Navigator.of(context).pop();
             }
           }));
@@ -57,6 +63,14 @@ class _CardDialogState extends State<CardDialog> {
       },
     ));
     return list;
+  }
+
+  @override
+  void initState() {
+    setState(() {
+      this.count = widget.item['count'];
+    });
+    super.initState();
   }
 
   @override
