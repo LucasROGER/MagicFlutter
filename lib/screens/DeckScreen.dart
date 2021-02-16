@@ -1,4 +1,5 @@
 import 'package:MagicFlutter/components/DualList.dart';
+import 'package:MagicFlutter/screens/base/Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -17,34 +18,32 @@ class DeckScreen extends StatefulWidget {
 class _DeckScreenState extends State<DeckScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.id.toString()) // TODO Replace with deck name
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Search',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 10),
-              Expanded(
-                flex: 1,
-                child: DualList<dynamic>(
-                  renderItem: (ctxt, i, item) {
-                    return Container();
-                  },
-                  list: [],
-                ),
-              )
-            ],
+    return Screen(
+      title: widget.id.toString(),
+      child: Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(
+              labelText: 'Search',
+              border: OutlineInputBorder(),
+            ),
           ),
-        ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/deck/' + widget.id.toString() + '/stats');
+            },
+            child: Text('See stats'),
+          ),
+          Expanded(
+            flex: 1,
+            child: DualList<dynamic>(
+              renderItem: (ctxt, i, item) {
+                return Container();
+              },
+              list: [],
+            ),
+          )
+        ],
       ),
     );
   }
