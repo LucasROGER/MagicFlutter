@@ -25,7 +25,6 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                     labelText: 'Name',
                     border: OutlineInputBorder(),
                   ),
-
                 ),
                 SizedBox(height: 10),
                 TextField(
