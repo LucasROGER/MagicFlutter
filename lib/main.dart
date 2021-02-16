@@ -22,7 +22,7 @@ class Navigation extends StatelessWidget {
       ),
       onGenerateRoute: (settings) {
         if (settings.name == '/') {
-          return MaterialPageRoute(builder: (context) => MagicFlutter());
+          return MaterialPageRoute(builder: (context) => NavigationBarWidget());
         }
 
         // Handle '/deck/:id'
@@ -40,12 +40,3 @@ class Navigation extends StatelessWidget {
 }
 
 
-class MagicFlutter extends StatelessWidget {
-
-  MagicFlutter();
-
-  @override
-  Widget build(BuildContext context) {
-    return NavigationBarWidget();
-  }
-}

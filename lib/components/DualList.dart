@@ -27,6 +27,9 @@ class _DualListState extends State<DualList> {
             child: Text(
               'Empty',
               style: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
                 color: Color.fromARGB(127, 127, 127, 127),
               ),
             ),
