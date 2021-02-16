@@ -1,1 +1,3 @@
-typedef storageCallback = void Function(dynamic item);
+import 'package:MagicFlutter/class/MagicCard.dart';
+
+typedef storageCallback = void Function(MagicCard item);

@@ -1,8 +1,9 @@
+import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/utils/Storage.dart';
 import 'package:flutter/material.dart';
 
 class CardDialog extends StatefulWidget {
-  final dynamic item;
+  final MagicCard item;
   final storageCallback addCallback;
   final storageCallback removeOneCallback;
   final storageCallback removeCallback;
@@ -27,8 +28,8 @@ class _CardDialogState extends State<CardDialog> {
     if (widget.addCallback != null) {
       list.add(IconButton(
           icon: Icon(Icons.add_circle),
-          onPressed: () {
-            widget.addCallback(widget.item);
+          onPressed: () async {
+            await widget.addCallback(widget.item);
             setState(() {
               this.count += 1;
             });
@@ -37,12 +38,12 @@ class _CardDialogState extends State<CardDialog> {
     if (widget.removeOneCallback != null) {
       list.add(IconButton(
           icon: Icon(Icons.remove_circle),
-          onPressed: () {
-            widget.removeOneCallback(widget.item);
+          onPressed: () async {
+            await widget.removeOneCallback(widget.item);
             setState(() {
               this.count -= 1;
             });
-            if (widget.item['count'] - 1 <= 0) {
+            if (widget.item.count - 1 <= 0) {
               Navigator.of(context).pop();
             }
           }));
@@ -50,9 +51,9 @@ class _CardDialogState extends State<CardDialog> {
     if (widget.removeCallback != null) {
       list.add(IconButton(
           icon: Icon(Icons.delete),
-          onPressed: () {
-            widget.removeCallback(widget.item);
-            widget.item['count'] = 0;
+          onPressed: () async {
+            await widget.removeCallback(widget.item);
+            widget.item.count = 0;
             Navigator.of(context).pop();
           }));
     }
@@ -68,7 +69,7 @@ class _CardDialogState extends State<CardDialog> {
   @override
   void initState() {
     setState(() {
-      this.count = widget.item['count'];
+      this.count = widget.item.count;
     });
     super.initState();
   }
@@ -79,7 +80,7 @@ class _CardDialogState extends State<CardDialog> {
         titlePadding: EdgeInsets.all(5),
         contentPadding: EdgeInsets.all(5),
         title: Text(
-          widget.item['name'] + ' (' + widget.item['count'].toString() + ')',
+          widget.item.name + ' (' + this.count.toString() + ')',
           textAlign: TextAlign.center,
         ),
         content: Container(
@@ -87,7 +88,7 @@ class _CardDialogState extends State<CardDialog> {
             fit: BoxFit.contain,
             image: NetworkImage(
                 "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
-                    widget.item['identifiers']['multiverseId']),
+                    widget.item.id),
           ),
         ),
         actions: getActionButton());

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MagicCard {
   List<String> colorIdentity;
-  int convertedManaCost;
+  double convertedManaCost;
   String id;
   String manaCost;
   String name;
@@ -21,6 +21,7 @@ class MagicCard {
   List<String> types;
   String uuid;
   int count;
+  String url;
 
   MagicCard(
       {
@@ -44,6 +45,7 @@ class MagicCard {
         this.types,
         this.uuid,
         this.count = 0,
+        this.url
       });
 
   MagicCard.fromJson(Map<String, dynamic> json) {
@@ -69,6 +71,7 @@ class MagicCard {
     types = json['types'].cast<String>();
     uuid = json['uuid'];
     count = json['count'] == null ? 0 : json['count'];
+    url = json['url'] == null ? 'https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=' : json['url']; //TODO
   }
 
   Map<String, dynamic> toJson() {
@@ -96,6 +99,7 @@ class MagicCard {
     data['types'] = this.types;
     data['uuid'] = this.uuid;
     data['count'] = this.count;
+    data['url'] = this.url;
     return data;
   }
 }

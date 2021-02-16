@@ -1,10 +1,11 @@
+import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/utils/DecksStorage.dart';
 import 'package:flutter/material.dart';
 
 import 'ActionItem.dart';
 
 class SelectDeckDialog extends StatefulWidget {
-  final dynamic toAdd;
+  final MagicCard toAdd;
 
   SelectDeckDialog({
     Key key,

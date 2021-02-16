@@ -1,3 +1,4 @@
+import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
@@ -21,28 +22,28 @@ class _MyCollectionViewState extends State<MyCollectionView> {
   }
 
   void _getMyCollection() async {
-    List myCards = await storage.get();
+    List<MagicCard> myCards = await storage.get();
     setState(() {
       this.cardList = myCards;
     });
   }
 
-  void _removeFromCollection(item) async {
-    List myCards = await storage.removeFromCollection(item);
+  void _removeFromCollection(MagicCard item) async {
+    List<MagicCard> myCards = await storage.removeFromCollection(item);
     setState(() {
       this.cardList = myCards;
     });
   }
 
-  void _removeOneFromCollection(item) async {
-    List myCards = await storage.removeOneFromCollection(item);
+  void _removeOneFromCollection(MagicCard item) async {
+    List<MagicCard> myCards = await storage.removeOneFromCollection(item);
     setState(() {
       this.cardList = myCards;
     });
   }
 
-  void _addOneFromCollection(item) async {
-    List myCards = await storage.addOneToCollection(item);
+  void _addOneFromCollection(MagicCard item) async {
+    List<MagicCard> myCards = await storage.addOneToCollection(item);
     setState(() {
       this.cardList = myCards;
     });
@@ -63,7 +64,7 @@ class _MyCollectionViewState extends State<MyCollectionView> {
                     barrierDismissible: true, // user must tap button!
                     builder: (BuildContext context) {
                       return CardDialog(
-                          item: item,
+                          item: item as MagicCard,
                           addCallback: _addOneFromCollection,
                           removeOneCallback: _removeOneFromCollection,
                           removeCallback: _removeFromCollection);
@@ -74,7 +75,7 @@ class _MyCollectionViewState extends State<MyCollectionView> {
                   new Image(
                     image: NetworkImage(
                         "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
-                            item['identifiers']['multiverseId']),
+                            item.id),
                   ),
                   new Container(
                       child: new Positioned(
@@ -96,7 +97,7 @@ class _MyCollectionViewState extends State<MyCollectionView> {
                               ],
                             ),
                             child: Text(
-                              item['count'].toString(),
+                              item.count.toString(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),

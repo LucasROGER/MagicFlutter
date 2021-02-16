@@ -1,3 +1,4 @@
+import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
@@ -13,15 +14,16 @@ class AllCardsView extends StatefulWidget {
 
 class _AllCardsViewState extends State<AllCardsView> {
   final CollectionStorage storage = new CollectionStorage();
-  List allCards = [];
+  List<MagicCard> allCards = [];
 
   void _getAllCards() async {
-    List myCards = await storage.get();
-    List allCardsList = [];
-    for (int i = 0; i < cardList.length; i++) {
+    List<MagicCard> myCards = await storage.get();
+    print(myCards);
+    List allCardsList = cardList.map((e) => new MagicCard.fromJson(e)).toList();
+    /*for (int i = 0; i < cardList.length; i++) {
       bool found = false;
       for (int j = 0; j < myCards.length; j++) {
-        if (myCards[j]['identifiers']['multiverseId'] ==
+        if (myCards[j].id ==
             cardList[i]['identifiers']['multiverseId']) {
           cardList[i]['count'] = myCards[j]['count'];
           found = true;
@@ -33,10 +35,11 @@ class _AllCardsViewState extends State<AllCardsView> {
         found = false;
       }
       allCardsList.add(cardList[i]);
-    }
+    }*/
     setState(() {
       this.allCards = allCardsList;
     });
+    print(allCardsList);
   }
 
   @override
@@ -48,7 +51,7 @@ class _AllCardsViewState extends State<AllCardsView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: DualList<dynamic>(
+      child: DualList<MagicCard>(
         list: this.allCards,
         renderItem: (BuildContext context, int index, dynamic item) {
           return Container(
@@ -60,14 +63,14 @@ class _AllCardsViewState extends State<AllCardsView> {
                     barrierDismissible: true, // user must tap button!
                     builder: (BuildContext context) {
                       return CardDialog(
-                          item: item, addCallback: storage.addToCollection);
+                          item: (item as MagicCard), addCallback: storage.addToCollection);
                     },
                   );
                 },
                 item: Image(
                   image: NetworkImage(
                       "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
-                          item['identifiers']['multiverseId']),
+                          (item as MagicCard).id),
                 ),
                 menuCallbacks: [
                       () {
