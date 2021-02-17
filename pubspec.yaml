@@ -51,6 +51,7 @@ flutter:
     - assets/images/colors/G.png
     - assets/images/colors/R.png
     - assets/images/colors/C.png
+    - assets/images/colors/identity/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
