@@ -4,7 +4,7 @@ typedef Widget RenderDualListItem<T>(BuildContext context, int i, T item);
 
 class DualList<T> extends StatefulWidget {
   final List<T> list;
-  final RenderDualListItem renderItem;
+  final RenderDualListItem<T> renderItem;
 
   DualList({
     Key key,
@@ -16,7 +16,7 @@ class DualList<T> extends StatefulWidget {
   _DualListState createState() => _DualListState();
 }
 
-class _DualListState extends State<DualList> {
+class _DualListState<T> extends State<DualList<T>> {
   @override
   Widget build(BuildContext context) {
     if (widget.list == null || widget.list.length == 0) {

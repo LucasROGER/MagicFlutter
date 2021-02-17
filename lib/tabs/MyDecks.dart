@@ -36,7 +36,7 @@ class _MyDecksViewState extends State<MyDecksView> {
     return Scaffold(
         body: DualList<MagicDeck>(
           list: deckList,
-          renderItem: (context, i, item) {
+          renderItem: (BuildContext context, int i, dynamic item) {
             return Deck(
               deck: item,
               onTap: () async {
