@@ -7,7 +7,7 @@ class CollectionStorage {
   final LocalStorage storage = new LocalStorage('my_storage');
 
   Future<List<MagicCard>> get() async {
-    var myCollection = await storage.getItem('cards');
+    dynamic myCollection = await storage.getItem('cards');
     if (myCollection == null)
       return [];
     else {

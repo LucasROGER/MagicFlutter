@@ -1,4 +1,6 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
+import 'package:MagicFlutter/class/MagicDeck.dart';
+import 'package:MagicFlutter/components/MenuItem.dart';
 import 'package:MagicFlutter/utils/DecksStorage.dart';
 import 'package:flutter/material.dart';
 
@@ -18,29 +20,62 @@ class SelectDeckDialog extends StatefulWidget {
 
 class _SelectDeckDialogState extends State<SelectDeckDialog> {
   final DeckStorage storage = new DeckStorage();
-  List deckList = [];
+  List<MagicDeck> deckList = [];
 
   void _getMyDecks() async {
-    List decks = await storage.get();
+    List<MagicDeck> decks = await storage.get();
     setState(() {
       this.deckList = decks;
     });
   }
 
-  void selectDeck(deck) async {
-    await storage.addToDeck(widget.toAdd, deck['id']);
+  void selectDeck(MagicDeck deck) async {
+    await storage.addToDeck(widget.toAdd, deck.id);
   }
 
-  List<Widget> getDeckItem(deck) {
+  List<Widget> getDeckItem(MagicDeck deck) {
     List<Widget> colors = [];
-    for (int i = 0; i < deck['identity'].length; i++) {
-      colors.add(Image(
-          width: 10,
-          height: 10,
-          image: AssetImage(
-              'assets/images/colors/' + deck['identity'][i] + '.png')));
+    print(deck.identity);
+
+    if (deck.identity.length == 0) {
+      colors.add(
+        Center(
+          child: Padding(
+            padding: EdgeInsets.all(3),
+            child: Image(
+              image: new AssetImage('assets/images/colors/C.png'),
+              width: 20,
+              height: 20,
+            ),
+          )
+        )
+      );
     }
-    colors.add(Text(deck['name']));
+    for (int i = 0; i < deck.identity.length; i++) {
+      colors.add(
+        Center(
+          child: Padding(
+            padding: EdgeInsets.all(3),
+            child: Image(
+              image: new AssetImage('assets/images/colors/' + deck.identity[i] + '.png'),
+              width: 20,
+              height: 20,
+            ),
+          )
+        )
+      );
+    }
+    colors.add(
+      Center(
+        child: Padding(
+          padding: EdgeInsets.all(3),
+            child: Text(
+              deck.name,
+              textAlign: TextAlign.center,
+          ),
+        )
+      )
+    );
     return colors;
   }
 
@@ -56,7 +91,7 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
         titlePadding: EdgeInsets.all(5),
         contentPadding: EdgeInsets.all(5),
         title: Text(
-          'Add ' + widget?.toAdd['name'],
+          'Add ' + widget.toAdd.name,
           textAlign: TextAlign.center,
         ),
         content: Container(
@@ -66,12 +101,13 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
               padding: EdgeInsets.all(16.0),
               itemCount: this.deckList.length,
               itemBuilder: (ctxt, i) {
-                return ActionItem(
+                return MenuItem(
                   onTap: () {
                     selectDeck(this.deckList[i]);
                   },
-                  item: Row(
-                    children: getDeckItem(this.deckList[i]),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: getDeckItem(this.deckList[i])
                   ),
                 );
               }),

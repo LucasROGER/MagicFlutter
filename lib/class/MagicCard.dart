@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class MagicCard {
   List<String> colorIdentity;
   double convertedManaCost;

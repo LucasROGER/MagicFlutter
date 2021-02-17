@@ -1,9 +1,10 @@
+import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:flutter/material.dart';
 
 class Deck extends StatefulWidget {
   final GestureTapCallback onTap;
-  final dynamic deck;
+  final MagicDeck deck;
 
   Deck({
     Key key,
@@ -25,7 +26,7 @@ class _DeckState extends State<Deck> {
           margin: EdgeInsets.all(10),
           child: Column(
             children: [
-              Text(widget.deck == null ? 'name' : widget.deck['name']),
+              Text(widget.deck == null ? 'name' : widget.deck.name),
               Image.network('http://placehold.it/210x297')
             ],
           ),

@@ -18,7 +18,6 @@ class _AllCardsViewState extends State<AllCardsView> {
 
   void _getAllCards() async {
     List<MagicCard> myCards = await storage.get();
-    print(myCards);
     List allCardsList = cardList.map((e) => new MagicCard.fromJson(e)).toList();
     /*for (int i = 0; i < cardList.length; i++) {
       bool found = false;
@@ -39,7 +38,6 @@ class _AllCardsViewState extends State<AllCardsView> {
     setState(() {
       this.allCards = allCardsList;
     });
-    print(allCardsList);
   }
 
   @override
