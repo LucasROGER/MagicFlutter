@@ -184,7 +184,12 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
               color: Color.fromARGB(40, 255, 30, 30),
             ),
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.fromLTRB(
+                  ResponsiveSize.responsiveWidth(context, 10),
+                  ResponsiveSize.responsiveWidth(context, 5),
+                  ResponsiveSize.responsiveWidth(context, 10),
+                  ResponsiveSize.responsiveWidth(context, 5)
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
