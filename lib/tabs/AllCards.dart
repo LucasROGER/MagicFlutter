@@ -16,7 +16,7 @@ class _AllCardsViewState extends State<AllCardsView> {
   final CollectionStorage storage = new CollectionStorage();
   List<MagicCard> allCards = [];
 
-  void _getAllCards() async {
+  void _getAllCards() {
     List<MagicCard> allCardsList = cardList.map((e) => new MagicCard.fromJson(e)).toList();
     setState(() {
       this.allCards = allCardsList;

@@ -52,6 +52,39 @@ flutter:
     - assets/images/colors/R.png
     - assets/images/colors/C.png
     - assets/images/colors/identity/
+    - assets/images/colors/identity/BG.jpg
+    - assets/images/colors/identity/BGR.jpg
+    - assets/images/colors/identity/BGRU.jpg
+    - assets/images/colors/identity/BGRUW.jpg
+    - assets/images/colors/identity/BGRW.jpg
+    - assets/images/colors/identity/BGU.jpg
+    - assets/images/colors/identity/BGUW.jpg
+    - assets/images/colors/identity/BGW.jpg
+    - assets/images/colors/identity/B.jpg
+    - assets/images/colors/identity/BR.jpg
+    - assets/images/colors/identity/BRU.jpg
+    - assets/images/colors/identity/BRUW.jpg
+    - assets/images/colors/identity/BRW.jpg
+    - assets/images/colors/identity/BU.jpg
+    - assets/images/colors/identity/BUW.jpg
+    - assets/images/colors/identity/BW.jpg
+    - assets/images/colors/identity/C.jpg
+    - assets/images/colors/identity/G.jpg
+    - assets/images/colors/identity/GR.jpg
+    - assets/images/colors/identity/GRU.jpg
+    - assets/images/colors/identity/GRUW.jpg
+    - assets/images/colors/identity/GRW.jpg
+    - assets/images/colors/identity/GU.jpg
+    - assets/images/colors/identity/GUW.jpg
+    - assets/images/colors/identity/GW.jpg
+    - assets/images/colors/identity/R.jpg
+    - assets/images/colors/identity/RU.jpg
+    - assets/images/colors/identity/RUW.jpg
+    - assets/images/colors/identity/RW.jpg
+    - assets/images/colors/identity/U.jpg
+    - assets/images/colors/identity/UW.jpg
+    - assets/images/colors/identity/W.jpg
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

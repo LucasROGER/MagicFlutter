@@ -17,6 +17,7 @@ class Navigation extends StatelessWidget {
   Widget build(BuildContext context) {
     decks.get();
     collection.get();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MagicFlutter',

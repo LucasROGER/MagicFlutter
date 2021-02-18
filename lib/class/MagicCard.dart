@@ -67,6 +67,10 @@ class MagicCard {
     toughness = json['toughness'];
     type = json['type'];
     types = json['types'].cast<String>();
+    // print('types');
+    // print(json['types']);
+    // print('casted');
+    // print(json['types'].cast<String>());
     uuid = json['uuid'];
     count = json['count'] == null ? 0 : json['count'];
     url = json['url'] == null ? 'https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=' : json['url']; //TODO
@@ -95,6 +99,8 @@ class MagicCard {
     data['toughness'] = this.toughness;
     data['type'] = this.type;
     data['types'] = this.types;
+    // print('this.types');
+    // print(this.types);
     data['uuid'] = this.uuid;
     data['count'] = this.count;
     data['url'] = this.url;
