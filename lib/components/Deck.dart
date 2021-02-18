@@ -1,6 +1,9 @@
 import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
+import 'package:MagicFlutter/components/ColorIdentity.dart';
+import 'package:MagicFlutter/utils/ResponsiveSize.dart';
 import 'package:flutter/material.dart';
+import 'package:MagicFlutter/utils/Extensions.dart';
 
 class Deck extends StatefulWidget {
   final GestureTapCallback onTap;
@@ -19,7 +22,7 @@ class Deck extends StatefulWidget {
 class _DeckState extends State<Deck> {
   List<String> c = ['B', 'G', 'R', 'U', 'W'];
   double ratio = 1.41;
-  double size = 0.4;
+  double size = 40;
 
   String sort(String colors) {
     String res = '';
@@ -82,17 +85,18 @@ class _DeckState extends State<Deck> {
           margin: EdgeInsets.all(10),
           child: Column(
             children: [
-              Text(widget.deck == null ? 'name' : widget.deck.name),
+              Text(widget.deck == null ? 'Name' : widget.deck.name.capitalize()),
               widget.deck == null ? Container() : Image(
                 image: AssetImage('assets/images/colors/identity/' + sort(widget.deck.identity) + '.jpg'),
-                width: MediaQuery.of(context).size.width * size,
-                height: MediaQuery.of(context).size.width * size * ratio,
+                width: ResponsiveSize.responsiveWidth(context, size),
+                height: ResponsiveSize.responsiveWidth(context, size * ratio),
                 fit: BoxFit.fitHeight,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: getDeckItem(widget.deck),
-              ),
+              ColorIdentity(
+                alignment: MainAxisAlignment.center,
+                deck: widget.deck,
+                size: 20,
+              )
             ],
           ),
         )

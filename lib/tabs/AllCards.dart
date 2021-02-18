@@ -17,24 +17,7 @@ class _AllCardsViewState extends State<AllCardsView> {
   List<MagicCard> allCards = [];
 
   void _getAllCards() async {
-    List<MagicCard> myCards = await storage.get();
     List<MagicCard> allCardsList = cardList.map((e) => new MagicCard.fromJson(e)).toList();
-    /*for (int i = 0; i < cardList.length; i++) {
-      bool found = false;
-      for (int j = 0; j < myCards.length; j++) {
-        if (myCards[j].id ==
-            cardList[i]['identifiers']['multiverseId']) {
-          cardList[i]['count'] = myCards[j]['count'];
-          found = true;
-        }
-      }
-      if (found == false) {
-        cardList[i]['count'] = 0;
-      } else {
-        found = false;
-      }
-      allCardsList.add(cardList[i]);
-    }*/
     setState(() {
       this.allCards = allCardsList;
     });

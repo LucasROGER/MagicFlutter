@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
+import 'package:MagicFlutter/components/ColorIdentity.dart';
 import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/screens/base/Screen.dart';
 import 'package:MagicFlutter/utils/DecksStorage.dart';
@@ -84,10 +83,14 @@ class _DeckScreenState extends State<DeckScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(
-                  context, '/deck/' + widget.id.toString() + '/stats');
+              Navigator.pushNamed(context, '/deck/' + widget.id.toString() + '/stats');
             },
             child: Text('See stats'),
+          ),
+          ColorIdentity(
+            alignment: MainAxisAlignment.spaceAround,
+            deck: this.deck,
+            size: 30,
           ),
           Expanded(
             flex: 1,
@@ -111,40 +114,45 @@ class _DeckScreenState extends State<DeckScreen> {
                         },
                       );
                     },
-                    item: new Stack(children: <Widget>[
-                      new Image(
-                        image: NetworkImage(
-                            "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
-                                item.id),
-                      ),
-                      new Container(
+                    item: new Stack(
+                      children: <Widget>[
+                        new Image(
+                          image: NetworkImage(
+                              "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
+                                  item.id),
+                        ),
+                        new Container(
                           child: new Positioned(
-                              bottom: 0,
-                              left: 5,
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black,
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      offset: Offset(
-                                          0, 0), // changes position of shadow
-                                    )
-                                  ],
-                                ),
-                                child: Text(
-                                  item.count.toString(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              )))
-                    ]),
-                  ));
+                            bottom: 0,
+                            left: 5,
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black,
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                    offset: Offset(
+                                        0, 0), // changes position of shadow
+                                  )
+                                ],
+                              ),
+                              child: Text(
+                                item.count.toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                              ),
+                            )
+                          )
+                        )
+                      ]
+                    ),
+                  )
+                );
               },
             ),
           )

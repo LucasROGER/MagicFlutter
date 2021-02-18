@@ -1,10 +1,10 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/class/MagicDeck.dart';
+import 'package:MagicFlutter/components/ColorIdentity.dart';
 import 'package:MagicFlutter/components/MenuItem.dart';
 import 'package:MagicFlutter/utils/DecksStorage.dart';
 import 'package:flutter/material.dart';
-
-import 'ActionItem.dart';
+import 'package:MagicFlutter/utils/Extensions.dart';
 
 class SelectDeckDialog extends StatefulWidget {
   final MagicCard toAdd;
@@ -21,6 +21,7 @@ class SelectDeckDialog extends StatefulWidget {
 class _SelectDeckDialogState extends State<SelectDeckDialog> {
   final DeckStorage storage = new DeckStorage();
   List<MagicDeck> deckList = [];
+  int nbToAdd = 1;
 
   void _getMyDecks() async {
     List<MagicDeck> decks = await storage.get();
@@ -30,7 +31,8 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
   }
 
   void selectDeck(MagicDeck deck) async {
-    await storage.addToDeck(widget.toAdd, deck.id);
+    for (int i = 0; i < this.nbToAdd; i++)
+      await storage.addToDeck(widget.toAdd, deck.id);
   }
 
   List<Widget> getDeckItem(MagicDeck deck) {
@@ -88,37 +90,68 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        titlePadding: EdgeInsets.all(5),
-        contentPadding: EdgeInsets.all(5),
-        title: Text(
-          'Add ' + widget.toAdd.name,
-          textAlign: TextAlign.center,
-        ),
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              padding: EdgeInsets.all(16.0),
-              itemCount: this.deckList.length,
-              itemBuilder: (ctxt, i) {
-                return MenuItem(
-                  onTap: () {
-                    selectDeck(this.deckList[i]);
-                  },
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: getDeckItem(this.deckList[i])
+      titlePadding: EdgeInsets.all(5),
+      contentPadding: EdgeInsets.all(5),
+      title: Text(
+        'Add ' + widget.toAdd.name,
+        textAlign: TextAlign.center,
+      ),
+      content: Container(
+        width: MediaQuery.of(context).size.width,
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          padding: EdgeInsets.all(16.0),
+          itemCount: this.deckList.length,
+          itemBuilder: (ctxt, i) {
+            return MenuItem(
+              onTap: () {
+                selectDeck(this.deckList[i]);
+                Navigator.pop(context);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    child: Text(this.deckList[i].name.capitalize()),
                   ),
-                );
-              }),
+                  ColorIdentity(
+                    size: 20,
+                    deck: this.deckList[i],
+                    alignment: MainAxisAlignment.start,
+                  ),
+                ],
+              ),
+            );
+          }
         ),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.remove_circle), onPressed: () {}),
-          TextButton(
-              child: Text('Dismiss'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-        ]);
+      ),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.remove_circle),
+          onPressed: () {
+            if (this.nbToAdd == 1) return;
+            setState(() {
+              this.nbToAdd -= 1;
+            });
+          }
+        ),
+        Text(this.nbToAdd.toString()),
+        IconButton(
+          icon: Icon(Icons.add_circle),
+          onPressed: () {
+            setState(() {
+              this.nbToAdd += 1;
+            });
+          }
+        ),
+        TextButton(
+          child: Text('Dismiss'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          }
+        ),
+      ]
+    );
   }
 }
