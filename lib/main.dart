@@ -42,6 +42,13 @@ class Navigation extends StatelessWidget {
           return MaterialPageRoute(builder: (context) => DeckScreen(id: id));
         }
 
+        // Handle '/profile'
+        uri = Uri.parse(settings.name);
+        if (uri.pathSegments.length == 1 &&
+            uri.pathSegments.first == 'profile') {
+          return MaterialPageRoute(builder: (context) => ProfileScreen());
+        }
+
 
         return MaterialPageRoute(builder: (context) => NotFound());
       },
