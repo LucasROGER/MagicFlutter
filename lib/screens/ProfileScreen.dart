@@ -10,10 +10,11 @@ class ProfileScreen extends StatefulWidget {
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-int _nbrDecks = 0;
-int _nbrCards = 0;
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  int _nbrDecks = 0;
+  int _nbrCards = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,13 +53,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             },
                           ),
                           Container(
-                              width: 150,
                               padding: EdgeInsets.only(bottom: 20.0),
                               child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      "https://placehold.it/50"
-                                  ),
-                                  radius: 50.0
+                                  radius: 80,
+                                  backgroundImage: NetworkImage('https://placekitten.com/200/200')
                               )
                           ),
                           IconButton(
@@ -66,9 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 IconData(57919, fontFamily: 'MaterialIcons')
                             ),
                             tooltip: 'Import from gallery',
-                            onPressed: () {
-
-                            },
+                            onPressed: null,
                           ),
                         ]
                     ),
@@ -80,13 +76,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     TextButton(
                         child: Padding(
-                            child: Text("Delete Application Data"),
-                            padding: EdgeInsets.symetric(vertical: 5.0, horizontal: 10.0)
+                            child: Text(
+                                "Delete Application Data",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                )
+                            ),
+                            padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0)
                         ),
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(Colors.red)
                         ),
-                        onPressed: null
+                        onPressed: () {}
                     )
                   ]
               ),
