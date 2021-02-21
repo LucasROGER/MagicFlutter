@@ -25,6 +25,7 @@ class _DeckScreenState extends State<DeckScreen> {
   DeckStorage storage = new DeckStorage();
   MagicDeck deck;
   List<MagicCard> cardList;
+  List<MagicCard> displayedCards;
 
   void _getDeckData() async {
     List<MagicDeck> allDecks = await storage.get();
@@ -33,6 +34,7 @@ class _DeckScreenState extends State<DeckScreen> {
         setState(() {
           this.deck = allDecks[i];
           this.cardList = allDecks[i].cards;
+          this.displayedCards = allDecks[i].cards;
         });
         break;
       }
@@ -91,11 +93,19 @@ class _DeckScreenState extends State<DeckScreen> {
             alignment: MainAxisAlignment.spaceAround,
             deck: this.deck,
             size: 30,
+            disabled: false,
+            editCardView: (String selectedColors) {
+              print(selectedColors);
+              setState(() {
+                this.displayedCards = cardList.where((element) => element.colorIdentity.length == 0 || element.colorIdentity.where((e) => selectedColors.contains(e)).length != 0).toList();
+              });
+              // print('d ' + this.displayedCards.length.toString() + '|c ' + cardList.length.toString());
+            },
           ),
           Expanded(
             flex: 1,
             child: DualList<MagicCard>(
-              list: cardList,
+              list: displayedCards,
               renderItem: (BuildContext context, int index, dynamic item) {
                 return Container(
                   padding: EdgeInsets.fromLTRB(
