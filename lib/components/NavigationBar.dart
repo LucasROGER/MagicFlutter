@@ -16,7 +16,10 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
     int selectedIndex = 0;
     List<String> pageNames = ["All cards", "My collection", "My decks", "My profile"];
     List<Widget> widgetOptions = <Widget>[
-        AllCardsView(),MyCollectionView(),MyDecksView(),MyProfileView()
+        AllCardsView(),
+        MyCollectionView(),
+        MyDecksView(),
+        MyProfileView()
     ];
 
     void _onItemTapped(int index) {
