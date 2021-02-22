@@ -4,9 +4,9 @@ class ActionItem extends StatefulWidget {
   final Widget item;
   final List<PopupMenuEntry> menuItems;
   final List<Function> menuCallbacks;
-  final Function callback;
+  final Function onTap;
 
-  ActionItem({Key key, this.item, this.menuItems, this.menuCallbacks, this.callback})
+  ActionItem({Key key, this.item, this.menuItems, this.menuCallbacks, this.onTap})
       : super(key: key);
 
   @override
@@ -21,6 +21,7 @@ class _ActionItemState extends State<ActionItem> {
   }
 
   Future<void> _showCustomMenu() async {
+    if (widget.menuItems == null)  return;
     final RenderBox overlay = Overlay.of(context).context.findRenderObject();
 
     final index = await showMenu(
@@ -39,7 +40,7 @@ class _ActionItemState extends State<ActionItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: widget.callback,
+        onTap: widget.onTap,
         onLongPress: _showCustomMenu,
         onTapDown: _storePosition,
         child: widget.item);

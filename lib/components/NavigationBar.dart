@@ -3,7 +3,6 @@ import 'package:MagicFlutter/tabs/MyCollection.dart';
 import 'package:MagicFlutter/tabs/MyDecks.dart';
 import 'package:MagicFlutter/tabs/MyProfile.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class NavigationBarWidget extends StatefulWidget {
 
@@ -30,8 +29,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
         return PreferredSize(
             preferredSize: Size.fromHeight(40),
             child: AppBar(
-                backgroundColor: Colors.redAccent,
-                title: Text('MagicFlutter'),
+                title: Text('Magic Flutter'),
             ),
         );
     }
@@ -49,19 +47,19 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
                 items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
                         icon: Icon(Icons.dashboard_customize),
-                        title: Text('All Cards'),
+                        label: 'All Cards',
                     ),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.dashboard),
-                        title: Text('My collection'),
+                        label: 'My collection',
                     ),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.class_),
-                        title: Text('My decks'),
+                        label: 'My decks',
                     ),
                     BottomNavigationBarItem(
                         icon: Icon(Icons.person),
-                        title: Text('My profile'),
+                        label: 'My profile',
                     )
                 ],
                 currentIndex: selectedIndex,

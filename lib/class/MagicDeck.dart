@@ -1,0 +1,36 @@
+import 'package:MagicFlutter/class/MagicCard.dart';
+
+class MagicDeck {
+  String name;
+  String description;
+  List<MagicCard> cards;
+  String identity;
+  int id;
+
+  MagicDeck({this.name, this.description, this.cards, this.identity, this.id});
+
+  MagicDeck.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    description = json['description'];
+    if (json['cards'] != null) {
+      cards = new List<MagicCard>();
+      json['cards'].forEach((v) {
+        cards.add(new MagicCard.fromJson(v));
+      });
+    }
+    identity = json['identity'];
+    id = json['id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['description'] = this.description;
+    if (this.cards != null) {
+      data['cards'] = this.cards.map((v) => v.toJson()).toList();
+    }
+    data['identity'] = this.identity;
+    data['id'] = this.id;
+    return data;
+  }
+}

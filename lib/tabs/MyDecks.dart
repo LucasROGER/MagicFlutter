@@ -1,5 +1,7 @@
+import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/Deck.dart';
 import 'package:MagicFlutter/components/DualList.dart';
+import 'package:MagicFlutter/utils/DecksStorage.dart';
 import 'package:flutter/material.dart';
 
 class MyDecksView extends StatefulWidget {
@@ -12,17 +14,45 @@ class MyDecksView extends StatefulWidget {
 }
 
 class _MyDecksViewState extends State<MyDecksView> {
+  final DeckStorage storage = new DeckStorage();
+  List<MagicDeck> deckList = [];
 
-  final decks = <String>["test", "test", "test", "test", "test", "test", "test", "test"];
+  void _getDecks() async {
+    List<MagicDeck> decks =  await storage.get();
+    setState(() {
+      this.deckList = decks;
+    });
+  }
+
+  @override
+  void initState() {
+    _getDecks();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: DualList<String>(
-          list: decks,
-          renderItem: (context, i, item) {
-            return Text('item');
+    return Scaffold(
+        body: DualList<MagicDeck>(
+          list: deckList,
+          renderItem: (BuildContext context, int i, dynamic item) {
+            return Deck(
+              deck: item,
+              onTap: () async {
+                if (await Navigator.pushNamed(context, '/deck/' + item.id.toString()) == true)
+                  _getDecks();
+              },
+            );
           },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            if (await Navigator.pushNamed(context, '/deck/create') == true) {
+              _getDecks();
+            }
+          },
+          child: Icon(Icons.add),
         ),
     );
   }

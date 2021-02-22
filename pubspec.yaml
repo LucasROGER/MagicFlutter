@@ -35,6 +35,7 @@ dependencies:
 
   http: ^0.12.0+2
   path_provider: ^1.6.27
+  fl_chart: ^0.12.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -44,6 +45,46 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/images/colors/B.png
+    - assets/images/colors/W.png
+    - assets/images/colors/U.png
+    - assets/images/colors/G.png
+    - assets/images/colors/R.png
+    - assets/images/colors/C.png
+    - assets/images/colors/identity/
+    - assets/images/colors/identity/BG.jpg
+    - assets/images/colors/identity/BGR.jpg
+    - assets/images/colors/identity/BGRU.jpg
+    - assets/images/colors/identity/BGRUW.jpg
+    - assets/images/colors/identity/BGRW.jpg
+    - assets/images/colors/identity/BGU.jpg
+    - assets/images/colors/identity/BGUW.jpg
+    - assets/images/colors/identity/BGW.jpg
+    - assets/images/colors/identity/B.jpg
+    - assets/images/colors/identity/BR.jpg
+    - assets/images/colors/identity/BRU.jpg
+    - assets/images/colors/identity/BRUW.jpg
+    - assets/images/colors/identity/BRW.jpg
+    - assets/images/colors/identity/BU.jpg
+    - assets/images/colors/identity/BUW.jpg
+    - assets/images/colors/identity/BW.jpg
+    - assets/images/colors/identity/C.jpg
+    - assets/images/colors/identity/G.jpg
+    - assets/images/colors/identity/GR.jpg
+    - assets/images/colors/identity/GRU.jpg
+    - assets/images/colors/identity/GRUW.jpg
+    - assets/images/colors/identity/GRW.jpg
+    - assets/images/colors/identity/GU.jpg
+    - assets/images/colors/identity/GUW.jpg
+    - assets/images/colors/identity/GW.jpg
+    - assets/images/colors/identity/R.jpg
+    - assets/images/colors/identity/RU.jpg
+    - assets/images/colors/identity/RUW.jpg
+    - assets/images/colors/identity/RW.jpg
+    - assets/images/colors/identity/U.jpg
+    - assets/images/colors/identity/UW.jpg
+    - assets/images/colors/identity/W.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -66,17 +107,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
