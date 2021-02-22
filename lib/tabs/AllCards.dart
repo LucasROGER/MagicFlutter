@@ -16,12 +16,14 @@ class AllCardsView extends StatefulWidget {
 class _AllCardsViewState extends State<AllCardsView> {
   final CollectionStorage storage = new CollectionStorage();
   List<MagicCard> allCards = [];
+  List<MagicCard> newCards = [];
 
   void _getAllCards() {
-    List<MagicCard> allCardsList = cardList.map((e) =>
-    new MagicCard.fromJson(e)).toList();
+    List<MagicCard> allCardsList =
+        cardList.map((e) => new MagicCard.fromJson(e)).toList();
     setState(() {
       this.allCards = allCardsList;
+      this.newCards = allCardsList;
     });
   }
 
@@ -38,92 +40,91 @@ class _AllCardsViewState extends State<AllCardsView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SearchBar(),
-              Expanded(
-                child: DualList<MagicCard>(
-                  list: this.allCards,
-                  renderItem: (BuildContext context, int index,
-                      dynamic item) {
-                    return Container(
-                        padding: EdgeInsets.all(5),
-                        child: ActionItem(
-                          onTap: () {
-                            showDialog<void>(
-                              context: context,
-                              barrierDismissible: true,
-                              // user must tap button!
-                              builder: (BuildContext context) {
-                                return CardDialog(
-                                    item: item,
-                                    addCallback: storage.addToCollection);
-                              },
-                            );
+          SearchBar(list: this.newCards, newList: this.allCards),
+          Expanded(
+            child: DualList<MagicCard>(
+              list: this.allCards,
+              renderItem: (BuildContext context, int index, dynamic item) {
+                return Container(
+                    padding: EdgeInsets.all(5),
+                    child: ActionItem(
+                      onTap: () {
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: true,
+                          // user must tap button!
+                          builder: (BuildContext context) {
+                            return CardDialog(
+                                item: item,
+                                addCallback: storage.addToCollection);
                           },
-                          item: Image(
-                            image: NetworkImage(
-                                "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
-                                    item.id),
+                        );
+                      },
+                      item: Image(
+                        image: NetworkImage(
+                            "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
+                                item.id),
+                      ),
+                      menuCallbacks: [
+                        () {
+                          showDialog<void>(
+                            context: context,
+                            barrierDismissible: true,
+                            // user must tap button!
+                            builder: (BuildContext context) {
+                              return SelectDeckDialog(toAdd: item);
+                            },
+                          );
+                        },
+                        () {
+                          storage.addToCollection(item);
+                        },
+                        () {},
+                      ],
+                      menuItems: <PopupMenuEntry>[
+                        PopupMenuItem(
+                          value: 0,
+                          child: Wrap(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Icon(Icons.add_circle),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text("Add to a deck"),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                          menuCallbacks: [
-                                () {
-                              showDialog<void>(
-                                context: context,
-                                barrierDismissible: true,
-                                // user must tap button!
-                                builder: (BuildContext context) {
-                                  return SelectDeckDialog(toAdd: item);
-                                },
-                              );
-                            },
-                                () {
-                              storage.addToCollection(item);
-                            },
-                                () {},
-                          ],
-                          menuItems: <PopupMenuEntry>[
-                            PopupMenuItem(
-                              value: 0,
-                              child: Wrap(
+                        ),
+                        PopupMenuItem(
+                          value: 1,
+                          child: Wrap(
+                            children: <Widget>[
+                              Row(
                                 children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Icon(Icons.add_circle),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Text("Add to a deck"),
-                                      )
-                                    ],
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Icon(Icons.add_circle),
                                   ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text("Add to collection"),
+                                  )
                                 ],
                               ),
-                            ),
-                            PopupMenuItem(
-                              value: 1,
-                              child: Wrap(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Icon(Icons.add_circle),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Text("Add to collection"),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ));
-                  },
-                ),
-              )
-            ]));
+                            ],
+                          ),
+                        ),
+                      ],
+                    ));
+              },
+            ),
+          )
+        ]));
   }
 }
