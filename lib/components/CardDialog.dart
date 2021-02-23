@@ -31,11 +31,11 @@ class _CardDialogState extends State<CardDialog> {
       list.add(IconButton(
           icon: Icon(Icons.add_circle),
           onPressed: () async {
-            await sound.playSound(SoundType.Click);
             await widget.addCallback(widget.item);
             setState(() {
               this.count += 1;
             });
+            await sound.playSound(SoundType.AddCard);
           }));
     }
     if (widget.removeOneCallback != null) {

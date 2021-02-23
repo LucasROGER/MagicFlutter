@@ -2,8 +2,10 @@ import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
+import 'package:MagicFlutter/components/Filter.dart';
 import 'package:MagicFlutter/components/SearchBar.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
+import 'package:MagicFlutter/components/tmp/copy_Color.dart';
 import 'package:MagicFlutter/data.dart';
 import 'package:MagicFlutter/utils/CollectionStorage.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
@@ -42,6 +44,42 @@ class _AllCardsViewState extends State<AllCardsView> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SearchBar(list: this.allCards, updateFct: (newList) => setState((){this.newCards = newList;})),
+              Filter<String, MagicCard>(
+                filterValues: ['W', 'U', 'B', 'R', 'G'],
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                buildItem: (dynamic value, i) {
+                  return MtgColor(
+                    color: value,
+                  );
+                },
+                list: this.allCards,
+                condition: (dynamic value, dynamic item) {
+                  return (item.colorIdentity.contains(value) || item.colorIdentity.isEmpty);
+                },
+                updateList: (List<dynamic> newList) {
+                  setState(() {
+                    this.newCards = newList.cast<MagicCard>();
+                  });
+                },
+              ),
+              Filter<double, MagicCard>(
+                filterValues: [1, 2, 3, 4, 5],
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                buildItem: (dynamic value, i) {
+                  return Text(
+                    value.toString(),
+                  );
+                },
+                list: this.allCards,
+                condition: (dynamic value, dynamic item) {
+                  return item.convertedManaCost == value;
+                },
+                updateList: (List<dynamic> newList) {
+                  setState(() {
+                    this.newCards = newList.cast<MagicCard>();
+                  });
+                },
+              ),
               Expanded(
                 child: DualList<MagicCard>(
                   list: this.newCards,

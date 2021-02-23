@@ -25,36 +25,22 @@ class _MtgColorState extends State<MtgColor> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        !widget.disabled ? Text(
-            '(',
-            style: TextStyle(
-              fontSize: 20,
-              color: this.selected ? Colors.red : Colors.white,
-            )
-        ) : Container(),
-        ActionItem(
-          onTap: () {
-            setState(() {
-              this.selected = !this.selected;
-            });
-            widget.onTap(this.selected, widget.color);
-          },
-          item: Image(
-            image: new AssetImage('assets/images/colors/' + widget.color + '.png'),
-            width: widget.size,
-            height: widget.size,
-          ),
+    return ActionItem(
+      onTap: () {
+        if (widget.disabled) return;
+        setState(() {
+          this.selected = !this.selected;
+        });
+        widget.onTap(this.selected, widget.color);
+      },
+      item: Opacity(
+        opacity: selected ? 1 : 0.3,
+        child: Image(
+          image: new AssetImage('assets/images/colors/' + widget.color + '.png'),
+          width: widget.size,
+          height: widget.size,
         ),
-        !widget.disabled ? Text(
-          ')',
-          style: TextStyle(
-            fontSize: 20,
-            color: this.selected ? Colors.red : Colors.white,
-          )
-        ) : Container(),
-      ],
+      ),
     );
   }
 }

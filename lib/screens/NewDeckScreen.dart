@@ -41,6 +41,11 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
+                if (deckName.text.length == 0) {
+                  //TODO Error message
+                  return;
+                }
+
                 sound.playSound(SoundType.Validate);
                 storage.createDeck(deckName.text, deckDescription.text);
                 Navigator.of(context).pop(true);

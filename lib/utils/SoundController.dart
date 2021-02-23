@@ -11,7 +11,7 @@ class SoundController {
     else if (type == SoundType.Card) return await _playLocalSound("sounds/card.mp3");
     else if (type == SoundType.Deck) return await _playLocalSound("sounds/deck.mp3");
     else if (type == SoundType.Validate) return await _playLocalSound("sounds/validate.mp3");
-    else if (type == SoundType.AddCard) return await _playLocalSound("sounds/addCard.mp3");
+    else if (type == SoundType.AddCard) return await _playLocalSound("sounds/cardAdded.mp3");
     else return;
   }
 
