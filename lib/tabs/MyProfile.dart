@@ -30,6 +30,7 @@ class _ProfileScreenState extends State<MyProfileView> {
   int nbrCards = 0;
   Uint8List profilePicture;
 
+
   void setup() async {
     List<MagicCard> list = await cstorage.get();
     int len = 0;
@@ -74,9 +75,7 @@ class _ProfileScreenState extends State<MyProfileView> {
                           Expanded(
                             flex: 1,
                             child: IconButton(
-                                icon: Icon(
-                                    IconData(57364, fontFamily: 'MaterialIcons')
-                                ),
+                                icon: Icon(Icons.photo_camera),
                                 tooltip: 'Take a new picture',
                                 onPressed: () async {
                                   WidgetsFlutterBinding.ensureInitialized();
@@ -112,9 +111,7 @@ class _ProfileScreenState extends State<MyProfileView> {
                           Expanded(
                             flex: 1,
                             child: IconButton(
-                              icon: Icon(
-                                  IconData(57919, fontFamily: 'MaterialIcons')
-                              ),
+                              icon: Icon(Icons.image),
                               tooltip: 'Import from gallery',
                               onPressed: null,
                             ),
