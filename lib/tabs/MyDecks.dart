@@ -2,6 +2,7 @@ import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/Deck.dart';
 import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/utils/DecksStorage.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
 class MyDecksView extends StatefulWidget {
@@ -14,6 +15,7 @@ class MyDecksView extends StatefulWidget {
 }
 
 class _MyDecksViewState extends State<MyDecksView> {
+  final SoundController sound = new SoundController();
   final DeckStorage storage = new DeckStorage();
   List<MagicDeck> deckList = [];
 

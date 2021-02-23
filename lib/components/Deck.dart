@@ -2,6 +2,7 @@ import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/ColorIdentity.dart';
 import 'package:MagicFlutter/utils/ResponsiveSize.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/utils/Extensions.dart';
 
@@ -74,6 +75,7 @@ class _DeckState extends State<Deck> {
   Widget build(BuildContext context) {
     return Center(
       child: ActionItem(
+        soundType: SoundType.Deck,
         onTap: widget.onTap,
         item: Container (
           decoration: BoxDecoration(

@@ -6,6 +6,7 @@ import 'package:MagicFlutter/components/SearchBar.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
 import 'package:MagicFlutter/data.dart';
 import 'package:MagicFlutter/utils/CollectionStorage.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
 class AllCardsView extends StatefulWidget {
@@ -48,6 +49,7 @@ class _AllCardsViewState extends State<AllCardsView> {
                     return Container(
                         padding: EdgeInsets.all(5),
                         child: ActionItem(
+                          soundType: SoundType.Card,
                           onTap: () {
                             showDialog<void>(
                               context: context,

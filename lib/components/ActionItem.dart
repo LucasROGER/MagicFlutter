@@ -1,3 +1,4 @@
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
 class ActionItem extends StatefulWidget {
@@ -5,8 +6,15 @@ class ActionItem extends StatefulWidget {
   final List<PopupMenuEntry> menuItems;
   final List<Function> menuCallbacks;
   final Function onTap;
+  final SoundType soundType;
 
-  ActionItem({Key key, this.item, this.menuItems, this.menuCallbacks, this.onTap})
+  ActionItem(
+      {Key key,
+      this.item,
+      this.menuItems,
+      this.menuCallbacks,
+      this.onTap,
+      this.soundType})
       : super(key: key);
 
   @override
@@ -14,6 +22,7 @@ class ActionItem extends StatefulWidget {
 }
 
 class _ActionItemState extends State<ActionItem> {
+  final SoundController sound = new SoundController();
   var _tapPosition;
 
   void _storePosition(TapDownDetails details) {
@@ -21,7 +30,7 @@ class _ActionItemState extends State<ActionItem> {
   }
 
   Future<void> _showCustomMenu() async {
-    if (widget.menuItems == null)  return;
+    if (widget.menuItems == null) return;
     final RenderBox overlay = Overlay.of(context).context.findRenderObject();
 
     final index = await showMenu(
@@ -40,7 +49,10 @@ class _ActionItemState extends State<ActionItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: widget.onTap,
+        onTap: () async {
+          await sound.playSound(widget.soundType);
+          widget.onTap();
+        },
         onLongPress: _showCustomMenu,
         onTapDown: _storePosition,
         child: widget.item);

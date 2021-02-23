@@ -1,4 +1,5 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:MagicFlutter/utils/Storage.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class CardDialog extends StatefulWidget {
 }
 
 class _CardDialogState extends State<CardDialog> {
+  final SoundController sound = new SoundController();
   int count = 0;
 
   List<Widget> getActionButton() {
@@ -29,6 +31,7 @@ class _CardDialogState extends State<CardDialog> {
       list.add(IconButton(
           icon: Icon(Icons.add_circle),
           onPressed: () async {
+            await sound.playSound(SoundType.Click);
             await widget.addCallback(widget.item);
             setState(() {
               this.count += 1;
@@ -39,6 +42,7 @@ class _CardDialogState extends State<CardDialog> {
       list.add(IconButton(
           icon: Icon(Icons.remove_circle),
           onPressed: () async {
+            await sound.playSound(SoundType.Click);
             await widget.removeOneCallback(widget.item);
             setState(() {
               this.count -= 1;
@@ -52,6 +56,7 @@ class _CardDialogState extends State<CardDialog> {
       list.add(IconButton(
           icon: Icon(Icons.delete),
           onPressed: () async {
+            await sound.playSound(SoundType.Click);
             await widget.removeCallback(widget.item);
             widget.item.count = 0;
             Navigator.of(context).pop();
@@ -59,7 +64,8 @@ class _CardDialogState extends State<CardDialog> {
     }
     list.add(TextButton(
       child: Text('Dismiss'),
-      onPressed: () {
+      onPressed: () async {
+        await sound.playSound(SoundType.Click);
         Navigator.of(context).pop();
       },
     ));

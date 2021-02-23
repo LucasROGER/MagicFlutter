@@ -4,6 +4,7 @@ import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
 import 'package:MagicFlutter/utils/CollectionStorage.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
 class MyCollectionView extends StatefulWidget {
@@ -58,6 +59,7 @@ class _MyCollectionViewState extends State<MyCollectionView> {
           return Container(
             padding: EdgeInsets.all(5),
             child: ActionItem(
+              soundType: SoundType.Card,
               onTap: () {
                 showDialog<void>(
                   context: context,

@@ -1,4 +1,5 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,10 +20,12 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+  final SoundController sound = new SoundController();
   TextEditingController filterValue = new TextEditingController();
   bool matchCase = false;
 
   void updateList() {
+    sound.playSound(SoundType.Click);
     widget.updateFct(widget.list
         .where((item) => this.matchCase ? item.name.contains(filterValue.text) : item.name.toLowerCase().contains(filterValue.text.toLowerCase()))
         .toList());

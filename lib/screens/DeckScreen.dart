@@ -5,6 +5,7 @@ import 'package:MagicFlutter/components/ColorIdentity.dart';
 import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/screens/base/Screen.dart';
 import 'package:MagicFlutter/utils/DecksStorage.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:MagicFlutter/class/MagicCard.dart';
@@ -111,6 +112,7 @@ class _DeckScreenState extends State<DeckScreen> {
                   padding: EdgeInsets.fromLTRB(
                       index % 2 != 0 ? 5 : 0, 5, index % 2 != 0 ? 0 : 5, 5),
                   child: ActionItem(
+                    soundType: SoundType.Card,
                     onTap: () {
                       showDialog<void>(
                         context: context,

@@ -1,4 +1,5 @@
 import 'package:MagicFlutter/utils/DecksStorage.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/screens/base/Screen.dart';
 
@@ -8,6 +9,7 @@ class NewDeckScreen extends StatefulWidget {
 }
 
 class _NewDeckScreenState extends State<NewDeckScreen> {
+  final SoundController sound = new SoundController();
   DeckStorage storage = new DeckStorage();
   TextEditingController deckName = new TextEditingController();
   TextEditingController deckDescription = new TextEditingController();
@@ -39,6 +41,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
             SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
+                sound.playSound(SoundType.Validate);
                 storage.createDeck(deckName.text, deckDescription.text);
                 Navigator.of(context).pop(true);
               },
