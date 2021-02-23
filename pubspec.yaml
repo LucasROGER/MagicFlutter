@@ -24,19 +24,23 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # The following are needed to access camera, gallery, and path to retrieve / store images from / on the device
+  camera:
+  image_picker: ^0.6.1+4
+  path:
+  path_provider: ^1.6.27
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
-  image_picker: ^0.6.1+4
   flutter_speed_dial: ^1.2.1
   localstorage: ^3.0.6+9
   audioplayers: ^0.17.4
 
   http: ^0.12.0+2
-  path_provider: ^1.6.27
   fl_chart: ^0.12.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
