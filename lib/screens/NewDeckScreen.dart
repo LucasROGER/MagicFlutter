@@ -1,7 +1,7 @@
+import 'package:MagicFlutter/screens/base/Screen.dart';
 import 'package:MagicFlutter/utils/DecksStorage.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
-import 'package:MagicFlutter/screens/base/Screen.dart';
 
 class NewDeckScreen extends StatefulWidget {
   @override
@@ -17,39 +17,40 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
   @override
   Widget build(BuildContext context) {
     return Screen(
-      title: 'Create new deck',
-      child: Center(
-        child: Column(
-          children: [
-            TextField(
-              controller: deckName,
-              decoration: InputDecoration(
-                labelText: 'Name',
-                border: OutlineInputBorder(),
+        title: 'Create new deck',
+        child: Center(
+          child: Column(
+            children: [
+              TextField(
+                controller: deckName,
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: deckDescription,
-              keyboardType: TextInputType.multiline,
-              maxLines: 7,
-              decoration: InputDecoration(
-                labelText: 'Description',
-                border: const OutlineInputBorder(),
+              SizedBox(height: 10),
+              TextField(
+                controller: deckDescription,
+                keyboardType: TextInputType.multiline,
+                maxLines: 7,
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  border: const OutlineInputBorder(),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                sound.playSound(SoundType.Validate);
-                storage.createDeck(deckName.text, deckDescription.text);
-                Navigator.of(context).pop(true);
-              },
-              child: Text('Create')
-            ),
-          ],
-        ),
-      )
-    );
+              SizedBox(height: 10),
+              MaterialButton(
+                  color: Theme.of(context).accentColor,
+                  enableFeedback: false,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    sound.playSound(SoundType.Validate);
+                    storage.createDeck(deckName.text, deckDescription.text);
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text('Create')),
+            ],
+          ),
+        ));
   }
 }
