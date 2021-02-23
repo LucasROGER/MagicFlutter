@@ -30,7 +30,9 @@ class _CardDialogState extends State<CardDialog> {
     if (widget.addCallback != null) {
       list.add(IconButton(
           icon: Icon(Icons.add_circle),
+          enableFeedback: false,
           onPressed: () async {
+            await sound.playSound(SoundType.AddCard);
             await widget.addCallback(widget.item);
             setState(() {
               this.count += 1;
@@ -41,13 +43,14 @@ class _CardDialogState extends State<CardDialog> {
     if (widget.removeOneCallback != null) {
       list.add(IconButton(
           icon: Icon(Icons.remove_circle),
+          enableFeedback: false,
           onPressed: () async {
             await sound.playSound(SoundType.Click);
             await widget.removeOneCallback(widget.item);
             setState(() {
               this.count -= 1;
             });
-            if (widget.item.count - 1 <= 0) {
+            if (this.count <= 0) {
               Navigator.of(context).pop();
             }
           }));
@@ -55,6 +58,7 @@ class _CardDialogState extends State<CardDialog> {
     if (widget.removeCallback != null) {
       list.add(IconButton(
           icon: Icon(Icons.delete),
+          enableFeedback: false,
           onPressed: () async {
             await sound.playSound(SoundType.Click);
             await widget.removeCallback(widget.item);
@@ -62,8 +66,9 @@ class _CardDialogState extends State<CardDialog> {
             Navigator.of(context).pop();
           }));
     }
-    list.add(TextButton(
-      child: Text('Dismiss'),
+    list.add(MaterialButton(
+      enableFeedback: false,
+      child: Text('Dismiss', style: TextStyle(color: Theme.of(context).accentColor),),
       onPressed: () async {
         await sound.playSound(SoundType.Click);
         Navigator.of(context).pop();

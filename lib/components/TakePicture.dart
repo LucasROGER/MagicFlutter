@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:MagicFlutter/utils/ProfileStorage.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class TakePictureScreen extends StatefulWidget {
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
+  final SoundController sound = new SoundController();
   CameraController _controller;
   Future<void> _initializeControllerFuture;
 
@@ -79,7 +81,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Attempt to take a picture and get the file `image`
             // where it was saved.
             final image = await _controller.takePicture();
-
+            await sound.playSound(SoundType.Camera);
             // If the picture was taken, display it on a new screen.
             if (await Navigator.push(
               context,
@@ -104,9 +106,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatelessWidget {
+  final SoundController sound = new SoundController();
   final String imagePath;
 
-  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+  DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +123,8 @@ class DisplayPictureScreen extends StatelessWidget {
             fit: BoxFit.fitWidth,
             image: FileImage(File(imagePath)),//Image.file(File(imagePath)),
           ),
-          TextButton(
+          MaterialButton(
+            enableFeedback: false,
             child: Padding(
                 child: Text(
                     "Save",
@@ -130,10 +134,9 @@ class DisplayPictureScreen extends StatelessWidget {
                 ),
                 padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0)
             ),
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.red)
-            ),
-            onPressed: () {
+            color: Theme.of(context).accentColor,
+            onPressed: () async {
+              await sound.playSound(SoundType.Validate);
               dynamic file = File(imagePath).readAsBytesSync();
               String img64 = base64Encode(file);
               ProfileStorage pstorage = new ProfileStorage();
