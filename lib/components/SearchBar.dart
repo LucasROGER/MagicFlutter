@@ -24,8 +24,8 @@ class _SearchBarState extends State<SearchBar> {
   TextEditingController filterValue = new TextEditingController();
   bool matchCase = false;
 
-  void updateList() {
-    sound.playSound(SoundType.Click);
+  void updateList() async {
+    await sound.playSound(SoundType.Click);
     widget.updateFct(widget.list
         .where((item) => this.matchCase ? item.name.contains(filterValue.text) : item.name.toLowerCase().contains(filterValue.text.toLowerCase()))
         .toList());

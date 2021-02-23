@@ -43,8 +43,8 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                   color: Theme.of(context).accentColor,
                   enableFeedback: false,
                   textColor: Colors.white,
-                  onPressed: () {
-                    sound.playSound(SoundType.Validate);
+                  onPressed: () async {
+                    await sound.playSound(SoundType.Validate);
                     storage.createDeck(deckName.text, deckDescription.text);
                     Navigator.of(context).pop(true);
                   },

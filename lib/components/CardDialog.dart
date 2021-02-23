@@ -49,7 +49,7 @@ class _CardDialogState extends State<CardDialog> {
             setState(() {
               this.count -= 1;
             });
-            if (widget.item.count - 1 <= 0) {
+            if (this.count <= 0) {
               Navigator.of(context).pop();
             }
           }));

@@ -135,8 +135,8 @@ class DisplayPictureScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0)
             ),
             color: Theme.of(context).accentColor,
-            onPressed: () {
-              sound.playSound(SoundType.Validate);
+            onPressed: () async {
+              await sound.playSound(SoundType.Validate);
               dynamic file = File(imagePath).readAsBytesSync();
               String img64 = base64Encode(file);
               ProfileStorage pstorage = new ProfileStorage();
