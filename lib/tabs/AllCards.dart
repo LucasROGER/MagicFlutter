@@ -1,13 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/components/SearchBar.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
-import 'package:MagicFlutter/data.dart';
 import 'package:MagicFlutter/utils/CollectionStorage.dart';
 import 'package:MagicFlutter/utils/FileManager.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
