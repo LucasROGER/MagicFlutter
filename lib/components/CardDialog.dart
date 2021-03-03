@@ -87,6 +87,7 @@ class _CardDialogState extends State<CardDialog> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.item.colorIdentity);
     return AlertDialog(
         titlePadding: EdgeInsets.all(5),
         contentPadding: EdgeInsets.all(5),

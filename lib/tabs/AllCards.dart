@@ -1,11 +1,13 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
+import 'package:MagicFlutter/components/CardList.dart';
 import 'package:MagicFlutter/components/DualList.dart';
-import 'package:MagicFlutter/components/Filter.dart';
+import 'package:MagicFlutter/components/filter/CardFilters.dart';
+import 'package:MagicFlutter/components/filter/CmcFilter.dart';
+import 'package:MagicFlutter/components/filter/ColorFilter.dart';
 import 'package:MagicFlutter/components/SearchBar.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
-import 'package:MagicFlutter/components/tmp/copy_Color.dart';
 import 'package:MagicFlutter/data.dart';
 import 'package:MagicFlutter/utils/CollectionStorage.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
@@ -20,13 +22,24 @@ class _AllCardsViewState extends State<AllCardsView> {
   final CollectionStorage storage = new CollectionStorage();
   List<MagicCard> allCards = [];
   List<MagicCard> newCards = [];
+  List<double> costs;
+  List<String> types;
 
   void _getAllCards() {
-    List<MagicCard> allCardsList =
-    cardList.map((e) => new MagicCard.fromJson(e)).toList();
+    List<MagicCard> allCardsList = cardList.map((e) => new MagicCard.fromJson(e)).where((element) => element.id != null).toList();
+    List<double> res = [];
+
+    for (int i = 0; i < allCardsList.length; i++) {
+      if (res.contains(allCardsList[i].convertedManaCost)) continue;
+      res.add(allCardsList[i].convertedManaCost);
+    }
+
+    res.sort();
+
     setState(() {
       this.allCards = allCardsList;
       this.newCards = allCardsList;
+      this.costs = res;
     });
   }
 
@@ -39,132 +52,76 @@ class _AllCardsViewState extends State<AllCardsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SearchBar(list: this.allCards, updateFct: (newList) => setState((){this.newCards = newList;})),
-              Filter<String, MagicCard>(
-                filterValues: ['W', 'U', 'B', 'R', 'G'],
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                buildItem: (dynamic value, i) {
-                  return MtgColor(
-                    color: value,
-                  );
-                },
-                list: this.allCards,
-                condition: (dynamic value, dynamic item) {
-                  return (item.colorIdentity.contains(value) || item.colorIdentity.isEmpty);
-                },
-                updateList: (List<dynamic> newList) {
-                  setState(() {
-                    this.newCards = newList.cast<MagicCard>();
-                  });
-                },
-              ),
-              Filter<double, MagicCard>(
-                filterValues: [1, 2, 3, 4, 5],
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                buildItem: (dynamic value, i) {
-                  return Text(
-                    value.toString(),
-                  );
-                },
-                list: this.allCards,
-                condition: (dynamic value, dynamic item) {
-                  return item.convertedManaCost == value;
-                },
-                updateList: (List<dynamic> newList) {
-                  setState(() {
-                    this.newCards = newList.cast<MagicCard>();
-                  });
-                },
-              ),
-              Expanded(
-                child: DualList<MagicCard>(
-                  list: this.newCards,
-                  renderItem: (BuildContext context, int index, dynamic item) {
-                    return Container(
-                        padding: EdgeInsets.all(5),
-                        child: ActionItem(
-                          soundType: SoundType.Card,
-                          onTap: () {
-                            showDialog<void>(
-                              context: context,
-                              barrierDismissible: true,
-                              // user must tap button!
-                              builder: (BuildContext context) {
-                                return CardDialog(
-                                    item: item,
-                                    addCallback: storage.addToCollection);
-                              },
-                            );
-                          },
-                          item: Image(
-                            image: NetworkImage(
-                                "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
-                                    item.id),
-                          ),
-                          menuCallbacks: [
-                                () {
-                              showDialog<void>(
-                                context: context,
-                                barrierDismissible: true,
-                                // user must tap button!
-                                builder: (BuildContext context) {
-                                  return SelectDeckDialog(toAdd: item);
-                                },
-                              );
-                            },
-                                () {
-                              storage.addToCollection(item);
-                            },
-                                () {},
-                          ],
-                          menuItems: <PopupMenuEntry>[
-                            PopupMenuItem(
-                              value: 0,
-                              child: Wrap(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Icon(Icons.add_circle),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Text("Add to a deck"),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 1,
-                              child: Wrap(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Icon(Icons.add_circle),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Text("Add to collection"),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ));
-                  },
+      body: CardList(
+        cards: this.allCards,
+        onTapCard: (MagicCard item) {
+          showDialog<void>(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return CardDialog(
+                  item: item,
+                  addCallback: storage.addToCollection
+              );
+            },
+          );
+        },
+        menuCallbacks: [
+          (MagicCard item) {
+            showDialog<void>(
+              context: context,
+              barrierDismissible: true,
+              // user must tap button!
+              builder: (BuildContext context) {
+                return SelectDeckDialog(toAdd: item);
+              },
+            );
+          },
+          (MagicCard item) {
+            storage.addToCollection(item);
+          },
+        ],
+        menuItems: [
+          PopupMenuItem(
+            value: 0,
+            child: Wrap(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Icon(Icons.add_circle),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Text("Add to a deck"),
+                    )
+                  ],
                 ),
-              )
-            ]));
+              ],
+            ),
+          ),
+          PopupMenuItem(
+            value: 1,
+            child: Wrap(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Icon(Icons.add_circle),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Text("Add to collection"),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      )
+    );
   }
 }

@@ -55,6 +55,7 @@ class _DeckState extends State<Deck> {
       );
     }
     for (int i = 0; i < deck.identity.length; i++) {
+      if (deck.identity[i] == 'C') continue;
       colors.add(
         Center(
           child: Padding(

@@ -43,7 +43,7 @@ class _ActionItemState extends State<ActionItem> {
     if (index == null) {
       return;
     }
-    widget.menuCallbacks[index]();
+    widget.menuCallbacks[index](widget.item);
   }
 
   @override
@@ -55,6 +55,7 @@ class _ActionItemState extends State<ActionItem> {
         },
         onLongPress: _showCustomMenu,
         onTapDown: _storePosition,
-        child: widget.item);
+        child: widget.item
+    );
   }
 }

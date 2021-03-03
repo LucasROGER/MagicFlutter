@@ -96,6 +96,8 @@ flutter:
     - assets/images/colors/identity/U.jpg
     - assets/images/colors/identity/UW.jpg
     - assets/images/colors/identity/W.jpg
+    - assets/images/arrow_up.png
+    - assets/images/arrow_down.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

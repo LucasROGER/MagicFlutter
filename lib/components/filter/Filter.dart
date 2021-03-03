@@ -1,6 +1,9 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
-import 'package:MagicFlutter/components/FilterItem.dart';
+import 'package:MagicFlutter/components/filter/FilterItem.dart';
+import 'package:MagicFlutter/utils/ResponsiveSize.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 typedef Widget FBuildItem<T>(T value, int index);
 typedef bool FilterCondition<T,U>(T value, U item);
@@ -13,6 +16,7 @@ class Filter<T,U> extends StatefulWidget {
   final FilterCondition<T,U> condition;
   final List<U> list;
   final FilterUpdate<U> updateList;
+  final Function specialCase;
 
   Filter({
     Key key,
@@ -22,6 +26,7 @@ class Filter<T,U> extends StatefulWidget {
     this.condition,
     this.list,
     this.updateList,
+    this.specialCase,
   }) : super(key: key);
 
   @override
@@ -36,18 +41,22 @@ class _FilterState<T,U> extends State<Filter<T,U>> {
   List<U> retrieveList() {
     List<U> res = [];
 
+    if (widget.specialCase != null) {
+      res.addAll(widget.list.where((element) => widget.specialCase(element) && !res.contains(element)));
+    }
+
     for (int i = 0; i < selected.length; i++) {
       if (!selected[i]) continue;
-      res.addAll(widget.list.where((element) => widget.condition(widget.filterValues[i], element) && !res.contains(element)).toList());
+      res.addAll(widget.list.where((element) => !res.contains(element) && widget.condition(widget.filterValues[i], element)));
     }
 
     return res;
   }
 
   void _buildItems() {
-    print(selected);
     List<FilterContent<T>> res = new List<FilterContent<T>>();
 
+    if (widget.filterValues == null) return;
     for (int i = 0; i < widget.filterValues.length; i++) {
       res.add(new FilterContent<T>(
         FilterItem(
@@ -59,7 +68,10 @@ class _FilterState<T,U> extends State<Filter<T,U>> {
             });
             widget.updateList(retrieveList());
           },
-          child: widget.buildItem(widget.filterValues[i], i),
+          child: Container(
+            child: widget.buildItem(widget.filterValues[i], i),
+            margin: EdgeInsets.all(5),
+          ),
           selected: selected[i],
         ),
         widget.filterValues[i]
@@ -103,10 +115,14 @@ class _FilterState<T,U> extends State<Filter<T,U>> {
 
   @override
   Widget build(BuildContext context) {
+    //print(widget.list.length);
     _buildItems();
-    return Row(
-      mainAxisAlignment: widget.mainAxisAlignment,
-      children: this.widgets,
+    return SizedBox(
+      height: ResponsiveSize.responsiveHeight(context, 5),
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: this.widgets,
+      )
     );
   }
 }
