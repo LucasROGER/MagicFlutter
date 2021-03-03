@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:localstorage/localstorage.dart';
 
 class FileManager {
-  List<String> assets = ['ZNR', 'KHM'];
+  List<String> assets = [/*'STX', */'ZNR', 'KHM'];
 
   Future<List<MagicCard>> fromAssets() async {
     List<MagicCard> list = [];
