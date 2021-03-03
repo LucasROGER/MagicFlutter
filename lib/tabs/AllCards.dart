@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
@@ -6,6 +9,7 @@ import 'package:MagicFlutter/components/SearchBar.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
 import 'package:MagicFlutter/data.dart';
 import 'package:MagicFlutter/utils/CollectionStorage.dart';
+import 'package:MagicFlutter/utils/FileManager.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +22,15 @@ class _AllCardsViewState extends State<AllCardsView> {
   final CollectionStorage storage = new CollectionStorage();
   List<MagicCard> allCards = [];
   List<MagicCard> newCards = [];
+  String directory;
+  List file = new List();
 
-  void _getAllCards() {
-    List<MagicCard> allCardsList =
-    cardList.map((e) => new MagicCard.fromJson(e)).toList();
+  void _getAllCards() async {
+    FileManager files = new FileManager();
+    List<MagicCard> cards = await files.fromAssets();
     setState(() {
-      this.allCards = allCardsList;
-      this.newCards = allCardsList;
+      this.allCards = cards;
+      this.newCards = cards;
     });
   }
 

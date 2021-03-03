@@ -40,10 +40,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<key>NSCameraUsageDescription</key>
-    <string>Camera is needed to take a profile picture</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Access to gallery is need to load an image</string>
 	<false/>
 </dict>
 </plist>
