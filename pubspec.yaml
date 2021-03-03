@@ -29,7 +29,7 @@ dependencies:
   image_picker: ^0.6.1+4
   path:
   path_provider: ^1.6.27
-
+  file_picker: ^2.1.6
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
@@ -41,6 +41,7 @@ dependencies:
   http: ^0.12.0+2
   fl_chart: ^0.12.3
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -51,19 +52,15 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - assets/sounds/card.mp3
-    - assets/sounds/deck.mp3
-    - assets/sounds/cardAdded.mp3
-    - assets/sounds/validate.mp3
+    - assets/data/ZNR.json
+    - assets/data/KHM.json
     - assets/sounds/camera.mp3
+    - assets/sounds/card.mp3
+    - assets/sounds/cardAdded.mp3
     - assets/sounds/click.mp3
-    - assets/images/colors/B.png
-    - assets/images/colors/W.png
-    - assets/images/colors/U.png
-    - assets/images/colors/G.png
-    - assets/images/colors/R.png
-    - assets/images/colors/C.png
-    - assets/images/colors/identity/
+    - assets/sounds/deck.mp3
+    - assets/sounds/validate.mp3
+    - assets/images/colors/
     - assets/images/colors/identity/BG.jpg
     - assets/images/colors/identity/BGR.jpg
     - assets/images/colors/identity/BGRU.jpg

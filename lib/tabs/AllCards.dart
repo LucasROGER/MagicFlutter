@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
@@ -10,6 +13,7 @@ import 'package:MagicFlutter/components/SearchBar.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
 import 'package:MagicFlutter/data.dart';
 import 'package:MagicFlutter/utils/CollectionStorage.dart';
+import 'package:MagicFlutter/utils/FileManager.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
@@ -22,24 +26,13 @@ class _AllCardsViewState extends State<AllCardsView> {
   final CollectionStorage storage = new CollectionStorage();
   List<MagicCard> allCards = [];
   List<MagicCard> newCards = [];
-  List<double> costs;
-  List<String> types;
 
-  void _getAllCards() {
-    List<MagicCard> allCardsList = cardList.map((e) => new MagicCard.fromJson(e)).where((element) => element.id != null).toList();
-    List<double> res = [];
-
-    for (int i = 0; i < allCardsList.length; i++) {
-      if (res.contains(allCardsList[i].convertedManaCost)) continue;
-      res.add(allCardsList[i].convertedManaCost);
-    }
-
-    res.sort();
-
+  void _getAllCards() async {
+    FileManager files = new FileManager();
+    List<MagicCard> cards = await files.fromAssets();
     setState(() {
-      this.allCards = allCardsList;
-      this.newCards = allCardsList;
-      this.costs = res;
+      this.allCards = cards;
+      this.newCards = cards;
     });
   }
 
