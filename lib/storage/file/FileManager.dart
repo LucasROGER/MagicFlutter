@@ -4,7 +4,7 @@ import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:flutter/services.dart';
 
 class FileManager {
-  List<String> assets = [/*'STX', 'KHM', 'ZNR', 'M21', 'IKO', 'THB', 'ELD',*/ 'M20'];
+  List<String> assets = [/*'STX', 'KHM', */'ZNR', 'M21', 'IKO', 'THB', 'ELD', 'M20'];
 
   Future<List<MagicCard>> fromAssets() async {
     List<MagicCard> list = [];

@@ -1,6 +1,7 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/SearchBar.dart';
 import 'package:MagicFlutter/components/filter/Filter.dart';
+import 'package:MagicFlutter/components/filter/SetFilter.dart';
 import 'package:MagicFlutter/utils/ResponsiveSize.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/components/filter/ColorFilter.dart';
@@ -16,6 +17,7 @@ class CardFilters extends StatefulWidget {
   final bool colors;
   final bool cmcs;
   final bool types;
+  final bool sets;
 
   CardFilters({
     Key key,
@@ -25,6 +27,7 @@ class CardFilters extends StatefulWidget {
     this.colors = true,
     this.cmcs = true,
     this.types = true,
+    this.sets = true,
   }) : super(key: key);
 
   @override
@@ -36,6 +39,7 @@ class _CardFiltersState extends State<CardFilters> {
   List<double> costs = [];
   List<String> colors = [];
   List<String> types = [];
+  List<String> sets = [];
   bool visible = true;
 
   List<MagicCard> _updateList() {
@@ -59,12 +63,15 @@ class _CardFiltersState extends State<CardFilters> {
     List<double> costs = [];
     List<String> colors = [];
     List<String> types = [];
+    List<String> sets = [];
 
     for (int i = 0; i < widget.allCards.length; i++) {
       if (!costs.contains(widget.allCards[i].convertedManaCost))
         costs.add(widget.allCards[i].convertedManaCost);
       colors.addAll(widget.allCards[i].colorIdentity.where((element) => !colors.contains(element)));
       types.addAll(widget.allCards[i].types.where((element) => !types.contains(element)));
+      if (!sets.contains(widget.allCards[i].setCode))
+        sets.add(widget.allCards[i].setCode);
     }
 
     costs.sort();
@@ -74,6 +81,7 @@ class _CardFiltersState extends State<CardFilters> {
       this.costs = costs;
       this.colors = colors;
       this.types = types;
+      this.sets = sets;
     });
   }
 
@@ -149,6 +157,15 @@ class _CardFiltersState extends State<CardFilters> {
                     updateList: (List<dynamic> newList) {
                       // newList.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
                       allList['type'] = newList.cast<MagicCard>();
+                      _update();
+                    },
+                  ),
+                  !widget.sets ? Container() : SetFilter(
+                    sets: this.sets,
+                    list: widget.allCards,
+                    updateList: (List<dynamic> newList) {
+                      // newList.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
+                      allList['set'] = newList.cast<MagicCard>();
                       _update();
                     },
                   ),
