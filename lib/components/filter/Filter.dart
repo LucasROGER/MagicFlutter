@@ -35,8 +35,8 @@ class Filter<T,U> extends StatefulWidget {
 
 class _FilterState<T,U> extends State<Filter<T,U>> {
   List<FilterContent<T>> filterContent;
-  List<bool> selected;
-  List<Widget> widgets;
+  List<bool> selected = [];
+  List<Widget> widgets = [];
 
   List<U> retrieveList() {
     List<U> res = [];
@@ -60,7 +60,7 @@ class _FilterState<T,U> extends State<Filter<T,U>> {
     for (int i = 0; i < widget.filterValues.length; i++) {
       res.add(new FilterContent<T>(
         FilterItem(
-          onTap: () {
+          onTap: (dynamic _null) {
             List<bool> tmp = selected;
             tmp[i] = !tmp[i];
             setState(() {
@@ -93,6 +93,7 @@ class _FilterState<T,U> extends State<Filter<T,U>> {
   }
 
   void setup() {
+    if (selected.length != 0) return;
     List<bool> s = [];
 
     for (int i = 0; i < widget.filterValues.length; i++) {
@@ -101,16 +102,21 @@ class _FilterState<T,U> extends State<Filter<T,U>> {
 
     setState(() {
       this.selected = s;
+      this.filterContent = new List<FilterContent<T>>();
     });
   }
 
   @override
   initState() {
     setup();
-    setState(() {
-      this.filterContent = new List<FilterContent<T>>();
-    });
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant Filter<T, U> oldWidget) {
+    if (oldWidget != widget)
+      setup();
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

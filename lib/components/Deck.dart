@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:MagicFlutter/utils/Extensions.dart';
 
 class Deck extends StatefulWidget {
-  final GestureTapCallback onTap;
+  final Function onTap;
   final MagicDeck deck;
 
   Deck({

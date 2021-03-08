@@ -48,7 +48,7 @@ class _CardFiltersState extends State<CardFilters> {
       // res.addAll(allList[allList.keys.toList()[i]].where((element) => !res.contains(element)));
     }
 
-    res.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
+    res.sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id)));
     return res;
   }
 
@@ -56,8 +56,7 @@ class _CardFiltersState extends State<CardFilters> {
     widget.update(_updateList());
   }
 
-  @override
-  void initState() {
+  void setup() {
     List<double> costs = [];
     List<String> colors = [];
     List<String> types = [];
@@ -77,8 +76,19 @@ class _CardFiltersState extends State<CardFilters> {
       this.colors = colors;
       this.types = types;
     });
+  }
 
+  @override
+  void initState() {
+    setup();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant CardFilters oldWidget) {
+    if (oldWidget != widget)
+      setup();
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

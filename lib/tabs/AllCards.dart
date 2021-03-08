@@ -29,10 +29,12 @@ class _AllCardsViewState extends State<AllCardsView> {
 
   void _getAllCards() async {
     FileManager files = new FileManager();
-    List<MagicCard> cards = await files.fromAssets();
-    setState(() {
-      this.allCards = cards;
-      this.newCards = cards;
+    files.fromAssets().then((value) {
+      value.removeWhere((element) => element.id == null);
+      setState(() {
+        this.allCards = value;
+        this.newCards = value;
+      });
     });
   }
 
@@ -43,24 +45,33 @@ class _AllCardsViewState extends State<AllCardsView> {
   }
 
   @override
+  void didUpdateWidget(covariant AllCardsView oldWidget) {
+    if (oldWidget != widget) {
+      _getAllCards();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CardList(
+    if (this.allCards.length == 0) return Container();
+    return Container(
+      child: CardList(
         cards: this.allCards,
-        onTapCard: (MagicCard item) {
+        onTapCard: (dynamic item) {
           showDialog<void>(
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) {
               return CardDialog(
-                  item: item,
-                  addCallback: storage.addToCollection
+                item: item,
+                addCallback: storage.addToCollection
               );
             },
           );
         },
-        menuCallbacks: [
-          (MagicCard item) {
+        menuCallbacks: <Function>[
+          (dynamic item) {
             showDialog<void>(
               context: context,
               barrierDismissible: true,
@@ -70,11 +81,11 @@ class _AllCardsViewState extends State<AllCardsView> {
               },
             );
           },
-          (MagicCard item) {
+          (dynamic item) {
             storage.addToCollection(item);
           },
         ],
-        menuItems: [
+        menuItems: <PopupMenuEntry>[
           PopupMenuItem(
             value: 0,
             child: Wrap(

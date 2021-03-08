@@ -107,7 +107,7 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
           itemCount: this.deckList.length,
           itemBuilder: (ctxt, i) {
             return MenuItem(
-              onTap: () async {
+              onTap: (dynamic _null) async {
                 await sound.playSound(SoundType.Click);
                 selectDeck(this.deckList[i]);
                 Navigator.pop(context);
