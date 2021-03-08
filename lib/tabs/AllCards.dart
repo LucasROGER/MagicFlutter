@@ -4,8 +4,9 @@ import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/components/SearchBar.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
-import 'package:MagicFlutter/utils/CollectionStorage.dart';
-import 'package:MagicFlutter/utils/FileManager.dart';
+import 'package:MagicFlutter/storage/AllCardsStorage.dart';
+import 'package:MagicFlutter/storage/CollectionStorage.dart';
+import 'package:MagicFlutter/storage/file/FileManager.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
@@ -15,15 +16,15 @@ class AllCardsView extends StatefulWidget {
 }
 
 class _AllCardsViewState extends State<AllCardsView> {
-  final CollectionStorage storage = new CollectionStorage();
+  final CollectionStorage collectionStorage = new CollectionStorage();
+  final AllCardsStorage storage = new AllCardsStorage();
   List<MagicCard> allCards = [];
   List<MagicCard> newCards = [];
   String directory;
   List file = new List();
 
   void _getAllCards() async {
-    FileManager files = new FileManager();
-    List<MagicCard> cards = await files.fromAssets();
+    List<MagicCard> cards = await storage.get();
     setState(() {
       this.allCards = cards;
       this.newCards = cards;
@@ -60,7 +61,7 @@ class _AllCardsViewState extends State<AllCardsView> {
                               builder: (BuildContext context) {
                                 return CardDialog(
                                     item: item,
-                                    addCallback: storage.addToCollection);
+                                    addCallback: collectionStorage.addToCollection);
                               },
                             );
                           },
@@ -81,7 +82,7 @@ class _AllCardsViewState extends State<AllCardsView> {
                               );
                             },
                                 () {
-                              storage.addToCollection(item);
+                                  collectionStorage.addToCollection(item);
                             },
                                 () {},
                           ],

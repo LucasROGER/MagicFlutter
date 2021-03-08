@@ -2,7 +2,7 @@ import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/ColorIdentity.dart';
 import 'package:MagicFlutter/components/MenuItem.dart';
-import 'package:MagicFlutter/utils/DecksStorage.dart';
+import 'package:MagicFlutter/storage/DecksStorage.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/utils/Extensions.dart';

@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:MagicFlutter/class/MagicCard.dart';
-import 'package:MagicFlutter/utils/CollectionStorage.dart';
-import 'package:MagicFlutter/utils/DecksStorage.dart';
-import 'package:MagicFlutter/utils/ProfileStorage.dart';
+import 'package:MagicFlutter/storage/CollectionStorage.dart';
+import 'package:MagicFlutter/storage/DecksStorage.dart';
+import 'package:MagicFlutter/storage/ProfileStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/components/TakePicture.dart';
 import 'package:camera/camera.dart';

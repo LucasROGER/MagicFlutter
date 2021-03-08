@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:MagicFlutter/utils/ProfileStorage.dart';
+import 'package:MagicFlutter/storage/ProfileStorage.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';

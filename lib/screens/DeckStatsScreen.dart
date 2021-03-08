@@ -1,7 +1,7 @@
 import 'package:MagicFlutter/utils/Extensions.dart';
 import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/screens/base/Screen.dart';
-import 'package:MagicFlutter/utils/DecksStorage.dart';
+import 'package:MagicFlutter/storage/DecksStorage.dart';
 import 'package:MagicFlutter/utils/ResponsiveSize.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';

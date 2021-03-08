@@ -1,10 +1,8 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
-import 'package:localstorage/localstorage.dart';
+import 'package:MagicFlutter/storage/Storage.dart';
 
-typedef storageCallback = Future<List<MagicCard>> Function(MagicCard item);
-
-class CollectionStorage {
-  final LocalStorage storage = new LocalStorage('my_storage');
+class CollectionStorage extends Storage<MagicCard> {
+  CollectionStorage() : super('my_collection');
 
   Future<List<MagicCard>> get() async {
     dynamic myCollection = await storage.getItem('cards');

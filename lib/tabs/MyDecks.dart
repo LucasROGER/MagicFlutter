@@ -1,7 +1,7 @@
 import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/Deck.dart';
 import 'package:MagicFlutter/components/DualList.dart';
-import 'package:MagicFlutter/utils/DecksStorage.dart';
+import 'package:MagicFlutter/storage/DecksStorage.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 

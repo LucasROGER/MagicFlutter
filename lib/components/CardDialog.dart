@@ -1,6 +1,6 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
-import 'package:MagicFlutter/utils/Storage.dart';
+import 'package:MagicFlutter/storage/Storage.dart';
 import 'package:flutter/material.dart';
 
 class CardDialog extends StatefulWidget {

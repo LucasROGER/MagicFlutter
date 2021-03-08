@@ -2,19 +2,25 @@ import 'package:MagicFlutter/screens/DeckScreen.dart';
 import 'package:MagicFlutter/screens/DeckStatsScreen.dart';
 import 'package:MagicFlutter/screens/NewDeckScreen.dart';
 import 'package:MagicFlutter/screens/NotFound.dart';
-import 'package:MagicFlutter/utils/CollectionStorage.dart';
-import 'package:MagicFlutter/utils/DecksStorage.dart';
+import 'package:MagicFlutter/storage/AllCardsStorage.dart';
+import 'package:MagicFlutter/storage/CollectionStorage.dart';
+import 'package:MagicFlutter/storage/DecksStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/components/NavigationBar.dart';
 
-void main() => runApp(Navigation());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(Navigation());
+}
 
 class Navigation extends StatelessWidget {
   final CollectionStorage collection = new CollectionStorage();
   final DeckStorage decks = new DeckStorage();
+  final AllCardsStorage allCards = new AllCardsStorage();
 
   @override
   Widget build(BuildContext context) {
+    allCards.storeFromAssets();
     decks.get();
     collection.get();
 
@@ -52,7 +58,8 @@ class Navigation extends StatelessWidget {
             uri.pathSegments.first == 'deck' &&
             uri.pathSegments.last == 'stats') {
           var id = int.parse(uri.pathSegments[1]);
-          return MaterialPageRoute(builder: (context) => DeckStatsScreen(id: id));
+          return MaterialPageRoute(
+              builder: (context) => DeckStatsScreen(id: id));
         }
 
 
