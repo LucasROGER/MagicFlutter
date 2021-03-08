@@ -18,19 +18,16 @@ class DualList<T> extends StatefulWidget {
 
 class _DualListState<T> extends State<DualList<T>> {
   List<T> currentList = [];
-  int _pageSize = 10;
+  int _pageSize = 12;
   int _pageIndex = 1;
   bool isLoading = false;
 
   void _getFirstPage() {
-
-    print(widget.list.length.toString());
+    List<T> tmp = widget.list.sublist(0, _pageSize >= widget.list.length
+            ? (widget.list.length)
+            : (_pageSize));
     setState(() {
-      this.currentList = widget.list.sublist(
-          0,
-          _pageSize >= widget.list.length
-              ? (widget.list.length)
-              : (_pageSize));
+      this.currentList = tmp;
     });
   }
 
@@ -60,7 +57,7 @@ class _DualListState<T> extends State<DualList<T>> {
           });
           List<T> tmp = new List.from(this.currentList);
           for (int i = _pageIndex * _pageSize;
-              widget.list[i] != null && i < (_pageIndex + 1) * _pageSize;
+              widget.list.length > i && i < (_pageIndex + 1) * _pageSize;
               i++) {
             tmp.add(widget.list[i]);
           }
@@ -72,6 +69,7 @@ class _DualListState<T> extends State<DualList<T>> {
         }
       }
     });
+
     if (currentList == null || currentList.length == 0) {
       return Container(
         color: Colors.white,

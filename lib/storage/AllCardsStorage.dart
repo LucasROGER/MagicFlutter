@@ -19,7 +19,6 @@ class AllCardsStorage extends Storage<MagicCard> {
     if (allCards == null)
       return [];
     else {
-      print(allCards);
       return (allCards as List)
           ?.where((e) =>
               e['id'] != null ||

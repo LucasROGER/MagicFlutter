@@ -41,7 +41,7 @@ class _MyDecksViewState extends State<MyDecksView> {
           renderItem: (BuildContext context, int i, dynamic item) {
             return Deck(
               deck: item,
-              onTap: () async {
+              onTap: (dynamic _null) async {
                 if (await Navigator.pushNamed(context, '/deck/' + item.id.toString()) == true)
                   _getDecks();
               },

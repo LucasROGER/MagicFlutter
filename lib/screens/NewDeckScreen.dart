@@ -44,6 +44,10 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                   enableFeedback: false,
                   textColor: Colors.white,
                   onPressed: () async {
+                    if (deckName.text.length == 0) {
+                      //TODO Error message
+                      return;
+                    }
                     await sound.playSound(SoundType.Validate);
                     storage.createDeck(deckName.text, deckDescription.text);
                     Navigator.of(context).pop(true);

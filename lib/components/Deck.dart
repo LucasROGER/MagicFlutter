@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:MagicFlutter/utils/Extensions.dart';
 
 class Deck extends StatefulWidget {
-  final GestureTapCallback onTap;
+  final Function onTap;
   final MagicDeck deck;
 
   Deck({
@@ -55,6 +55,7 @@ class _DeckState extends State<Deck> {
       );
     }
     for (int i = 0; i < deck.identity.length; i++) {
+      if (deck.identity[i] == 'C') continue;
       colors.add(
         Center(
           child: Padding(

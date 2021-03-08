@@ -4,16 +4,12 @@ import 'package:flutter/rendering.dart';
 
 class MtgColor extends StatefulWidget {
   final double size;
-  final Function onTap;
   final String color;
-  final bool disabled;
 
   MtgColor({
     Key key,
     this.size = 20,
-    this.onTap,
     this.color,
-    this.disabled = true,
   }) : super(key: key);
 
   @override
@@ -21,17 +17,12 @@ class MtgColor extends StatefulWidget {
 }
 
 class _MtgColorState extends State<MtgColor> {
-  bool selected = true;
-
   @override
   Widget build(BuildContext context) {
-    return Opacity(
-      opacity: selected ? 1 : 0.3,
-      child: Image(
-        image: new AssetImage('assets/images/colors/' + widget.color + '.png'),
-        width: widget.size,
-        height: widget.size,
-      ),
+    return Image(
+      image: new AssetImage('assets/images/colors/' + widget.color + '.png'),
+      width: widget.size,
+      height: widget.size,
     );
   }
 }

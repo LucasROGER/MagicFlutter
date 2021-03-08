@@ -37,6 +37,7 @@ class _CardDialogState extends State<CardDialog> {
             setState(() {
               this.count += 1;
             });
+            await sound.playSound(SoundType.AddCard);
           }));
     }
     if (widget.removeOneCallback != null) {

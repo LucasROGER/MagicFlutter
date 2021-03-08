@@ -43,7 +43,9 @@ class _ColorIdentityState extends State<ColorIdentity> {
         )
       );
     }
+
     for (int i = 0; i < widget.deck.identity.length; i++) {
+      if (widget.deck.identity[i] == 'C') continue;
       colors.add(
         Center(
           child: Padding(
@@ -59,7 +61,6 @@ class _ColorIdentityState extends State<ColorIdentity> {
                     this.selectedColors = this.selectedColors.replaceAll(color, '');
                   });
                 }
-                print(this.selectedColors);
                 widget.editCardView(this.selectedColors);
               },
               color: widget.deck.identity[i],

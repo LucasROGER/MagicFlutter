@@ -7,15 +7,17 @@ class ActionItem extends StatefulWidget {
   final List<Function> menuCallbacks;
   final Function onTap;
   final SoundType soundType;
+  final dynamic param;
 
-  ActionItem(
-      {Key key,
-      this.item,
-      this.menuItems,
-      this.menuCallbacks,
-      this.onTap,
-      this.soundType})
-      : super(key: key);
+  ActionItem({
+    Key key,
+    this.item,
+    this.menuItems,
+    this.menuCallbacks,
+    this.onTap,
+    this.soundType,
+    this.param = '',
+  }) : super(key: key);
 
   @override
   _ActionItemState createState() => _ActionItemState();
@@ -29,7 +31,7 @@ class _ActionItemState extends State<ActionItem> {
     _tapPosition = details.globalPosition;
   }
 
-  Future<void> _showCustomMenu() async {
+  void _showCustomMenu() async {
     if (widget.menuItems == null) return;
     final RenderBox overlay = Overlay.of(context).context.findRenderObject();
 
@@ -43,7 +45,7 @@ class _ActionItemState extends State<ActionItem> {
     if (index == null) {
       return;
     }
-    widget.menuCallbacks[index]();
+    widget.menuCallbacks[index](widget.param);
   }
 
   @override
@@ -51,10 +53,11 @@ class _ActionItemState extends State<ActionItem> {
     return GestureDetector(
         onTap: () async {
           await sound.playSound(widget.soundType);
-          widget.onTap();
+          widget.onTap(widget.param);
         },
         onLongPress: _showCustomMenu,
         onTapDown: _storePosition,
-        child: widget.item);
+        child: widget.item
+    );
   }
 }
