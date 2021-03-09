@@ -59,6 +59,13 @@ flutter:
     - assets/data/THB.json
     - assets/data/ZNR.json
     - assets/data/KHM.json
+    - assets/images/sets/ELD.png
+    - assets/images/sets/IKO.png
+    - assets/images/sets/M20.png
+    - assets/images/sets/M21.png
+    - assets/images/sets/THB.png
+    - assets/images/sets/ZNR.png
+    - assets/images/sets/KHM.png
     - assets/sounds/camera.mp3
     - assets/sounds/card.mp3
     - assets/sounds/cardAdded.mp3

@@ -30,7 +30,7 @@ class _CmcFilterState extends State<CmcFilter> {
       buildItem: (dynamic value, i) {
         return Cmc(
           cmc: value,
-          size: 6,
+          size: 7,
         );
       },
       list: widget.list,

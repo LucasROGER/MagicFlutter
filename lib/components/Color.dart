@@ -1,3 +1,4 @@
+import 'package:MagicFlutter/utils/ResponsiveSize.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:flutter/rendering.dart';
@@ -10,7 +11,7 @@ class MtgColor extends StatefulWidget {
 
   MtgColor({
     Key key,
-    this.size = 20,
+    this.size = 7,
     this.onTap,
     this.color,
     this.disabled = true,
@@ -29,8 +30,8 @@ class _MtgColorState extends State<MtgColor> {
       opacity: selected ? 1 : 0.3,
       child: Image(
         image: new AssetImage('assets/images/colors/' + widget.color + '.png'),
-        width: widget.size,
-        height: widget.size,
+        width: ResponsiveSize.responsiveWidth(context, widget.size),
+        height: ResponsiveSize.responsiveWidth(context, widget.size),
       ),
     );
   }
