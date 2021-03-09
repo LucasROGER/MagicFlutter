@@ -1,4 +1,5 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
+import 'package:MagicFlutter/utils/ResponsiveSize.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/components/filter/Filter.dart';
 
@@ -27,7 +28,11 @@ class TypeFilterState extends State<TypeFilter> {
       filterValues: widget.types,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       buildItem: (dynamic value, int i) {
-        return Text(value);
+        return Image(
+            image: AssetImage('assets/images/types/' + value.toLowerCase() + '.png'),
+            width: ResponsiveSize.responsiveWidth(context, 7),
+            height: ResponsiveSize.responsiveWidth(context, 7),
+            color: Colors.black);
       },
       list: widget.list,
       condition: (dynamic value, dynamic item) {
