@@ -16,10 +16,11 @@ class _AllCardsViewState extends State<AllCardsView> {
   final AllCardsStorage storage = new AllCardsStorage();
   List<MagicCard> allCards = [];
   List<MagicCard> newCards = [];
+  bool displayList = false;
 
   void _getAllCards() async {
     List<MagicCard> cards = await storage.get();
-    print(cards);
+    // print(cards);
     setState(() {
       this.allCards = cards;
       this.newCards = cards;
@@ -43,9 +44,10 @@ class _AllCardsViewState extends State<AllCardsView> {
   @override
   Widget build(BuildContext context) {
     if (this.allCards.length == 0) return Container();
-    return Container(
-      child: CardList(
+    return Scaffold(
+      body: CardList(
         cards: this.allCards,
+        displayList: this.displayList,
         onTapCard: (dynamic item) {
           showDialog<void>(
             context: context,
@@ -113,7 +115,15 @@ class _AllCardsViewState extends State<AllCardsView> {
             ),
           ),
         ],
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            this.displayList = !this.displayList;
+          });
+        },
+        child: Icon(!this.displayList ? Icons.grid_view : Icons.list),
+      ),
     );
   }
 }

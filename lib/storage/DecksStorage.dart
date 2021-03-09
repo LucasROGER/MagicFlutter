@@ -2,6 +2,8 @@ import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/storage/Storage.dart';
 
+typedef deckStorageCallback = void Function(MagicCard item, int id);
+
 class DeckStorage extends Storage<MagicDeck> {
   DeckStorage() : super('my_decks');
 

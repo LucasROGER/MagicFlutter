@@ -100,6 +100,18 @@ class _CardDialogState extends State<CardDialog> {
             image: NetworkImage(
                 "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
                     widget.item.id),
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                      loadingProgress.expectedTotalBytes
+                      : null,
+                ),
+              );
+            },
           ),
         ),
         actions: getActionButton());
