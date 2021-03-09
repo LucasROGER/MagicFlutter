@@ -26,6 +26,7 @@ class _DeckScreenState extends State<DeckScreen> {
   MagicDeck deck;
   List<MagicCard> cardList;
   List<MagicCard> displayedCards;
+  displayStats = true;
 
   void _getDeckData() async {
     List<MagicDeck> allDecks = await storage.get();
@@ -77,6 +78,21 @@ class _DeckScreenState extends State<DeckScreen> {
       title: this.deck == null ? '' : this.deck.name,
       child: Column(
         children: [
+          TextButton(
+              child: Padding(
+                  child: Text(
+                      "Graphical/Stats",
+                      style: TextStyle(
+                        color: Colors.white,
+                      )
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0)
+              ),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.black)
+              ),
+              onPressed: () {this.displayStats = !this.displayStats}
+          ),
           TextField(
             decoration: InputDecoration(
               labelText: 'Search',
@@ -107,62 +123,123 @@ class _DeckScreenState extends State<DeckScreen> {
             child: DualList<MagicCard>(
               list: displayedCards,
               renderItem: (BuildContext context, int index, dynamic item) {
-                return Container(
-                  padding: EdgeInsets.fromLTRB(
-                      index % 2 != 0 ? 5 : 0, 5, index % 2 != 0 ? 0 : 5, 5),
-                  child: ActionItem(
-                    onTap: () {
-                      showDialog<void>(
-                        context: context,
-                        barrierDismissible: true, // user must tap button!
-                        builder: (BuildContext context) {
-                          return CardDialog(
-                            item: item,
-                            addCallback: _addToDeck,
-                            removeOneCallback: _removeOneToDeck,
+                if (displayGraphical) {
+                  return Container(
+                      padding: EdgeInsets.fromLTRB(
+                          index % 2 != 0 ? 5 : 0, 5, index % 2 != 0 ? 0 : 5, 5),
+                      child: ActionItem(
+                        onTap: () {
+                          showDialog<void>(
+                            context: context,
+                            barrierDismissible: true, // user must tap button!
+                            builder: (BuildContext context) {
+                              return CardDialog(
+                                item: item,
+                                addCallback: _addToDeck,
+                                removeOneCallback: _removeOneToDeck,
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                    item: new Stack(
-                      children: <Widget>[
-                        new Image(
-                          image: NetworkImage(
-                              "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
-                                  item.id),
-                        ),
-                        new Container(
-                          child: new Positioned(
-                            bottom: 0,
-                            left: 5,
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: Colors.grey,
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black,
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        0, 0), // changes position of shadow
+                        item: new Stack(
+                            children: <Widget>[
+                              new Image(
+                                image: NetworkImage(
+                                    "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
+                                        item.id),
+                              ),
+                              new Container(
+                                  child: new Positioned(
+                                      bottom: 0,
+                                      left: 5,
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black,
+                                              spreadRadius: 2,
+                                              blurRadius: 10,
+                                              offset: Offset(
+                                                  0, 0), // changes position of shadow
+                                            )
+                                          ],
+                                        ),
+                                        child: Text(
+                                          item.count.toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                      )
                                   )
-                                ],
+                              )
+                            ]
+                        ),
+                      )
+                  );
+                } else {
+                  return Container(
+                      padding: EdgeInsets.fromLTRB(
+                          index % 2 != 0 ? 5 : 0, 5, index % 2 != 0 ? 0 : 5, 5),
+                      child: ActionItem(
+                        onTap: () {
+                          showDialog<void>(
+                            context: context,
+                            barrierDismissible: true, // user must tap button!
+                            builder: (BuildContext context) {
+                              return CardDialog(
+                                item: item,
+                                addCallback: _addToDeck,
+                                removeOneCallback: _removeOneToDeck,
+                              );
+                            },
+                          );
+                        },
+                        item: new Stack(
+                            children: <Widget>[
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 1.0),
+                                  children: <Text>[
+                                    item.name,
+                                    item.manaCost
+                                  ]
                               ),
-                              child: Text(
-                                item.count.toString(),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              ),
-                            )
-                          )
-                        )
-                      ]
-                    ),
-                  )
-                );
+/*                              new Container(
+                                  child: new Positioned(
+                                      bottom: 0,
+                                      left: 5,
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black,
+                                              spreadRadius: 2,
+                                              blurRadius: 10,
+                                              offset: Offset(
+                                                  0, 0), // changes position of shadow
+                                            )
+                                          ],
+                                        ),
+                                        child: Text(
+                                          item.count.toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                      )
+                                  )
+                              )*/
+                            ]
+                        ),
+                      )
+                  );
+                }
               },
             ),
           )
