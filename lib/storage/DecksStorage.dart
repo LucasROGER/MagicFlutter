@@ -1,12 +1,14 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/class/MagicDeck.dart';
-import 'package:localstorage/localstorage.dart';
+import 'package:MagicFlutter/storage/Storage.dart';
 
-class DeckStorage {
-  final LocalStorage storage = new LocalStorage('my_decks');
+typedef deckStorageCallback = void Function(MagicCard item, int id);
+
+class DeckStorage extends Storage<MagicDeck> {
+  DeckStorage() : super('my_decks');
 
   Future<List<MagicDeck>> get() async {
-    dynamic myDecks = await storage.getItem('decks');
+    dynamic myDecks = await this.storage.getItem('decks');
     if (myDecks == null)
       return [];
     else
@@ -14,7 +16,7 @@ class DeckStorage {
   }
 
   void set(List<MagicDeck> value) async {
-    await storage.setItem('decks', value.map((e) => e.toJson()).toList());
+    await this.storage.setItem('decks', value.map((e) => e.toJson()).toList());
   }
 
   void removeDeck(int id) async {
@@ -110,7 +112,7 @@ class DeckStorage {
         break;
       }
     }
-    
+
     currentDeck.identity = getColorIdentity(currentDeck.cards);
     set(myDecks);
   }

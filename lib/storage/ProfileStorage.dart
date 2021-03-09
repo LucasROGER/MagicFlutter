@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:MagicFlutter/class/MagicCard.dart';
-import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:localstorage/localstorage.dart';
 import 'dart:io' as Io;
@@ -12,7 +10,6 @@ class ProfileStorage {
 
 
   Future<Uint8List> get() async {
-
     dynamic profilePicture = await storage.getItem('profile_picture');
     if (profilePicture == null)
       return null;

@@ -2,7 +2,8 @@ import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/ColorIdentity.dart';
 import 'package:MagicFlutter/components/MenuItem.dart';
-import 'package:MagicFlutter/utils/DecksStorage.dart';
+import 'package:MagicFlutter/storage/DecksStorage.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/utils/Extensions.dart';
 
@@ -19,6 +20,7 @@ class SelectDeckDialog extends StatefulWidget {
 }
 
 class _SelectDeckDialogState extends State<SelectDeckDialog> {
+  final SoundController sound = new SoundController();
   final DeckStorage storage = new DeckStorage();
   List<MagicDeck> deckList = [];
   int nbToAdd = 1;
@@ -37,7 +39,6 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
 
   List<Widget> getDeckItem(MagicDeck deck) {
     List<Widget> colors = [];
-    print(deck.identity);
 
     if (deck.identity.length == 0) {
       colors.add(
@@ -54,6 +55,7 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
       );
     }
     for (int i = 0; i < deck.identity.length; i++) {
+      if (deck.identity[i] == 'C') continue;
       colors.add(
         Center(
           child: Padding(
@@ -104,7 +106,8 @@ class _SelectDeckDialogState extends State<SelectDeckDialog> {
           itemCount: this.deckList.length,
           itemBuilder: (ctxt, i) {
             return MenuItem(
-              onTap: () {
+              onTap: (dynamic _null) async {
+                await sound.playSound(SoundType.Click);
                 selectDeck(this.deckList[i]);
                 Navigator.pop(context);
               },

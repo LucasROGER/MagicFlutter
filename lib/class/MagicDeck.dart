@@ -18,6 +18,7 @@ class MagicDeck {
         cards.add(new MagicCard.fromJson(v));
       });
     }
+
     identity = json['identity'];
     id = json['id'];
   }

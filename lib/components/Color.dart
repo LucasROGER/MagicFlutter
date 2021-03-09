@@ -1,19 +1,15 @@
+import 'package:MagicFlutter/utils/ResponsiveSize.dart';
 import 'package:flutter/material.dart';
-import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:flutter/rendering.dart';
 
 class MtgColor extends StatefulWidget {
   final double size;
-  final Function onTap;
   final String color;
-  final bool disabled;
 
   MtgColor({
     Key key,
-    this.size = 20,
-    this.onTap,
+    this.size = 7,
     this.color,
-    this.disabled = true,
   }) : super(key: key);
 
   @override
@@ -21,40 +17,12 @@ class MtgColor extends StatefulWidget {
 }
 
 class _MtgColorState extends State<MtgColor> {
-  bool selected = true;
-
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        !widget.disabled ? Text(
-            '(',
-            style: TextStyle(
-              fontSize: 20,
-              color: this.selected ? Colors.red : Colors.white,
-            )
-        ) : Container(),
-        ActionItem(
-          onTap: () {
-            setState(() {
-              this.selected = !this.selected;
-            });
-            widget.onTap(this.selected, widget.color);
-          },
-          item: Image(
-            image: new AssetImage('assets/images/colors/' + widget.color + '.png'),
-            width: widget.size,
-            height: widget.size,
-          ),
-        ),
-        !widget.disabled ? Text(
-          ')',
-          style: TextStyle(
-            fontSize: 20,
-            color: this.selected ? Colors.red : Colors.white,
-          )
-        ) : Container(),
-      ],
+    return Image(
+      image: new AssetImage('assets/images/colors/' + widget.color + '.png'),
+      width: ResponsiveSize.responsiveWidth(context, widget.size),
+      height: ResponsiveSize.responsiveWidth(context, widget.size),
     );
   }
 }

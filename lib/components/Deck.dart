@@ -2,11 +2,12 @@ import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/ColorIdentity.dart';
 import 'package:MagicFlutter/utils/ResponsiveSize.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/utils/Extensions.dart';
 
 class Deck extends StatefulWidget {
-  final GestureTapCallback onTap;
+  final Function onTap;
   final MagicDeck deck;
 
   Deck({
@@ -36,44 +37,11 @@ class _DeckState extends State<Deck> {
     return res;
   }
 
-  List<Widget> getDeckItem(MagicDeck deck) {
-    List<Widget> colors = [];
-
-    if (deck.identity.length == 0) {
-      colors.add(
-        Center(
-          child: Padding(
-            padding: EdgeInsets.all(3),
-            child: Image(
-              image: new AssetImage('assets/images/colors/C.png'),
-              width: 20,
-              height: 20,
-            ),
-          )
-        )
-      );
-    }
-    for (int i = 0; i < deck.identity.length; i++) {
-      colors.add(
-        Center(
-          child: Padding(
-            padding: EdgeInsets.all(3),
-            child: Image(
-              image: new AssetImage('assets/images/colors/' + deck.identity[i] + '.png'),
-              width: 20,
-              height: 20,
-            ),
-          )
-        )
-      );
-    }
-    return colors;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ActionItem(
+        soundType: SoundType.Deck,
         onTap: widget.onTap,
         item: Container (
           decoration: BoxDecoration(

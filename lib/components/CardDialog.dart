@@ -1,5 +1,6 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
-import 'package:MagicFlutter/utils/Storage.dart';
+import 'package:MagicFlutter/utils/SoundController.dart';
+import 'package:MagicFlutter/storage/Storage.dart';
 import 'package:flutter/material.dart';
 
 class CardDialog extends StatefulWidget {
@@ -21,6 +22,7 @@ class CardDialog extends StatefulWidget {
 }
 
 class _CardDialogState extends State<CardDialog> {
+  final SoundController sound = new SoundController();
   int count = 0;
 
   List<Widget> getActionButton() {
@@ -28,22 +30,27 @@ class _CardDialogState extends State<CardDialog> {
     if (widget.addCallback != null) {
       list.add(IconButton(
           icon: Icon(Icons.add_circle),
+          enableFeedback: false,
           onPressed: () async {
+            await sound.playSound(SoundType.AddCard);
             await widget.addCallback(widget.item);
             setState(() {
               this.count += 1;
             });
+            await sound.playSound(SoundType.AddCard);
           }));
     }
     if (widget.removeOneCallback != null) {
       list.add(IconButton(
           icon: Icon(Icons.remove_circle),
+          enableFeedback: false,
           onPressed: () async {
+            await sound.playSound(SoundType.Click);
             await widget.removeOneCallback(widget.item);
             setState(() {
               this.count -= 1;
             });
-            if (widget.item.count - 1 <= 0) {
+            if (this.count <= 0) {
               Navigator.of(context).pop();
             }
           }));
@@ -51,15 +58,19 @@ class _CardDialogState extends State<CardDialog> {
     if (widget.removeCallback != null) {
       list.add(IconButton(
           icon: Icon(Icons.delete),
+          enableFeedback: false,
           onPressed: () async {
+            await sound.playSound(SoundType.Click);
             await widget.removeCallback(widget.item);
             widget.item.count = 0;
             Navigator.of(context).pop();
           }));
     }
-    list.add(TextButton(
-      child: Text('Dismiss'),
-      onPressed: () {
+    list.add(MaterialButton(
+      enableFeedback: false,
+      child: Text('Dismiss', style: TextStyle(color: Theme.of(context).accentColor),),
+      onPressed: () async {
+        await sound.playSound(SoundType.Click);
         Navigator.of(context).pop();
       },
     ));
@@ -89,6 +100,18 @@ class _CardDialogState extends State<CardDialog> {
             image: NetworkImage(
                 "https://gatherer.wizards.com/Handlers/Image.ashx?type=card&multiverseid=" +
                     widget.item.id),
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                      loadingProgress.expectedTotalBytes
+                      : null,
+                ),
+              );
+            },
           ),
         ),
         actions: getActionButton());

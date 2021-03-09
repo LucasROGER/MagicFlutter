@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class Screen extends StatefulWidget {
@@ -5,6 +7,7 @@ class Screen extends StatefulWidget {
   final Widget child;
   final EdgeInsets padding;
   final List<Widget> actions;
+  final FloatingActionButton floatingActionButton;
 
   Screen({
     Key key,
@@ -12,6 +15,7 @@ class Screen extends StatefulWidget {
     this.actions,
     this.child,
     this.padding = const EdgeInsets.all(10),
+    this.floatingActionButton,
   }) : super(key: key);
 
   @override
@@ -27,11 +31,12 @@ class _ScreenState extends State<Screen> {
         actions: widget.actions == null ? [] : widget.actions
       ),
       body: SafeArea(
-        child: Padding(
-          padding: widget.padding,
-          child: widget.child,
-        ),
+          child: Padding(
+            padding: widget.padding,
+            child: widget.child,
+          ),
       ),
+      floatingActionButton: widget.floatingActionButton,
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:MagicFlutter/class/MagicDeck.dart';
-import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/Color.dart';
 import 'package:flutter/material.dart';
 
@@ -34,36 +33,24 @@ class _ColorIdentityState extends State<ColorIdentity> {
         Center(
           child: Padding(
             padding: EdgeInsets.all(3),
-            child: Image(
-              image: new AssetImage('assets/images/colors/C.png'),
-              width: widget.size,
-              height: widget.size,
+            child: MtgColor(
+              color: 'C',
+              size: 5,
             ),
           )
         )
       );
     }
+
     for (int i = 0; i < widget.deck.identity.length; i++) {
+      if (widget.deck.identity[i] == 'C') continue;
       colors.add(
         Center(
           child: Padding(
             padding: EdgeInsets.all(3),
             child: MtgColor(
-              onTap: (bool selected, String color) {
-                if (selected)
-                  setState(() {
-                    this.selectedColors += color;
-                  });
-                else {
-                  setState(() {
-                    this.selectedColors = this.selectedColors.replaceAll(color, '');
-                  });
-                }
-                print(this.selectedColors);
-                widget.editCardView(this.selectedColors);
-              },
               color: widget.deck.identity[i],
-              disabled: widget.disabled,
+              size: 5,
             )
           )
         ),
