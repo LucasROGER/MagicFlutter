@@ -39,7 +39,7 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(5),
         child: TextField(
           controller: filterValue,
           onChanged: (String value) => updateList(),
