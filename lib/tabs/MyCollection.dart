@@ -1,11 +1,8 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
-import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/CardList.dart';
-import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
 import 'package:MagicFlutter/storage/CollectionStorage.dart';
-import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
 class MyCollectionView extends StatefulWidget {

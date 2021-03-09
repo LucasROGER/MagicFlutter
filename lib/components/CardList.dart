@@ -4,9 +4,7 @@ import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
 import 'ActionItem.dart';
-import 'CardDialog.dart';
 import 'DualList.dart';
-import 'SelectDeckDialog.dart';
 import 'filter/CardFilters.dart';
 
 typedef void TapCard(MagicCard card);

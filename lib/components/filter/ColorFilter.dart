@@ -29,7 +29,6 @@ class _ColorFilterState extends State<ColorFilter> {
       buildItem: (dynamic value, i) {
         return MtgColor(
           color: value,
-          disabled: false,
         );
       },
       list: widget.list,

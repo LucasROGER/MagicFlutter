@@ -37,41 +37,6 @@ class _DeckState extends State<Deck> {
     return res;
   }
 
-  List<Widget> getDeckItem(MagicDeck deck) {
-    List<Widget> colors = [];
-
-    if (deck.identity.length == 0) {
-      colors.add(
-        Center(
-          child: Padding(
-            padding: EdgeInsets.all(3),
-            child: Image(
-              image: new AssetImage('assets/images/colors/C.png'),
-              width: 20,
-              height: 20,
-            ),
-          )
-        )
-      );
-    }
-    for (int i = 0; i < deck.identity.length; i++) {
-      if (deck.identity[i] == 'C') continue;
-      colors.add(
-        Center(
-          child: Padding(
-            padding: EdgeInsets.all(3),
-            child: Image(
-              image: new AssetImage('assets/images/colors/' + deck.identity[i] + '.png'),
-              width: 20,
-              height: 20,
-            ),
-          )
-        )
-      );
-    }
-    return colors;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Center(

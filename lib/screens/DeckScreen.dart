@@ -1,14 +1,9 @@
 import 'package:MagicFlutter/class/MagicDeck.dart';
-import 'package:MagicFlutter/components/ActionItem.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/CardList.dart';
-import 'package:MagicFlutter/components/ColorIdentity.dart';
-import 'package:MagicFlutter/components/DualList.dart';
 import 'package:MagicFlutter/screens/base/Screen.dart';
 import 'package:MagicFlutter/storage/DecksStorage.dart';
-import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:MagicFlutter/class/MagicCard.dart';
 
 class DeckScreen extends StatefulWidget {

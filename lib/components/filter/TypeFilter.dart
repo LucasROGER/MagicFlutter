@@ -2,8 +2,6 @@ import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:flutter/material.dart';
 import 'package:MagicFlutter/components/filter/Filter.dart';
 
-import '../Color.dart';
-
 class TypeFilter extends StatefulWidget {
   final List<String> types;
   final List<MagicCard> list;

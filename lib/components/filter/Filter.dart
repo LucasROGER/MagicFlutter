@@ -1,4 +1,3 @@
-import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/filter/FilterItem.dart';
 import 'package:MagicFlutter/utils/ResponsiveSize.dart';
 import 'package:flutter/cupertino.dart';
