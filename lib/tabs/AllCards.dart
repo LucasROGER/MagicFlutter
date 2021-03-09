@@ -20,7 +20,6 @@ class _AllCardsViewState extends State<AllCardsView> {
 
   void _getAllCards() async {
     List<MagicCard> cards = await storage.get();
-    // print(cards);
     setState(() {
       this.allCards = cards;
       this.newCards = cards;

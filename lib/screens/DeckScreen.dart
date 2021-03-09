@@ -25,7 +25,7 @@ class _DeckScreenState extends State<DeckScreen> {
   MagicDeck deck;
   List<MagicCard> cardList;
   List<MagicCard> displayedCards;
-  bool displayStats = true;
+  bool displayList = false;
 
   void _getDeckData() async {
     List<MagicDeck> allDecks = await storage.get();
@@ -72,6 +72,15 @@ class _DeckScreenState extends State<DeckScreen> {
   @override
   Widget build(BuildContext context) {
     return Screen(
+      padding: EdgeInsets.all(0),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            this.displayList = !this.displayList;
+          });
+        },
+        child: Icon(this.displayList ? Icons.list : Icons.grid_view),
+      ),
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.delete),
@@ -80,36 +89,33 @@ class _DeckScreenState extends State<DeckScreen> {
             _removeDeck();
           },
         ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/deck/' + widget.id.toString() + '/stats');
+          },
+          child: Text('See stats'),
+        ),
       ],
       title: this.deck == null ? '' : this.deck.name,
-      child: Column(
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/deck/' + widget.id.toString() + '/stats');
-            },
-            child: Text('See stats'),
-          ),
-          Expanded(
-            flex: 1,
-            child: CardList(
-              cards: this.cardList,
-              onTapCard: (dynamic item) => {
-                showDialog<void>(
-                  context: context,
-                  barrierDismissible: true, // user must tap button!
-                  builder: (BuildContext context) {
-                    return CardDialog(
-                      item: item,
-                      addCallback: _addToDeck,
-                      removeOneCallback: _removeOneToDeck,
-                    );
-                  },
-                )
+      child: Expanded(
+        flex: 1,
+        child: CardList(
+          cards: this.cardList,
+          displayList: this.displayList,
+          onTapCard: (dynamic item) => {
+            showDialog<void>(
+              context: context,
+              barrierDismissible: true, // user must tap button!
+              builder: (BuildContext context) {
+                return CardDialog(
+                  item: item,
+                  addCallback: _addToDeck,
+                  removeOneCallback: _removeOneToDeck,
+                );
               },
             )
-          ),
-        ],
+          },
+        )
       ),
     );
   }
