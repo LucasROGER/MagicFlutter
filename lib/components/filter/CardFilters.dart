@@ -145,6 +145,17 @@ class _CardFiltersState extends State<CardFilters> {
                               _update();
                             },
                           ),
+                    !widget.sets
+                        ? Container()
+                        : SetFilter(
+                      sets: this.sets,
+                      list: widget.allCards,
+                      updateList: (List<dynamic> newList) {
+                        // newList.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
+                        allList['set'] = newList.cast<MagicCard>();
+                        _update();
+                      },
+                    ),
                     !widget.types
                         ? Container()
                         : TypeFilter(
@@ -153,17 +164,6 @@ class _CardFiltersState extends State<CardFilters> {
                             updateList: (List<dynamic> newList) {
                               // newList.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
                               allList['type'] = newList.cast<MagicCard>();
-                              _update();
-                            },
-                          ),
-                    !widget.sets
-                        ? Container()
-                        : SetFilter(
-                            sets: this.sets,
-                            list: widget.allCards,
-                            updateList: (List<dynamic> newList) {
-                              // newList.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
-                              allList['set'] = newList.cast<MagicCard>();
                               _update();
                             },
                           ),

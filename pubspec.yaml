@@ -54,6 +54,10 @@ flutter:
   assets:
     - assets/data/ELD.json
     - assets/data/IKO.json
+    - assets/data/M19.json
+    - assets/data/GRN.json
+    - assets/data/RNA.json
+    - assets/data/WAR.json
     - assets/data/M20.json
     - assets/data/M21.json
     - assets/data/THB.json
@@ -73,6 +77,10 @@ flutter:
     - assets/images/sets/THB.png
     - assets/images/sets/ZNR.png
     - assets/images/sets/KHM.png
+    - assets/images/sets/M19.png
+    - assets/images/sets/WAR.png
+    - assets/images/sets/RNA.png
+    - assets/images/sets/GRN.png
     - assets/sounds/camera.mp3
     - assets/sounds/card.mp3
     - assets/sounds/cardAdded.mp3
