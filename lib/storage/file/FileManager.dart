@@ -62,8 +62,7 @@ class FileManager {
     List<MagicCard> collection = await collectionStorage.get();
     List<MagicCard> rawCollection = [];
     collection.forEach((e) {
-      rawCollection.add(e);
-      if (e.count > 1) for (int i = 0; i < e.count - 1; i++) {
+      for (int i = 0; i <= e.count; i++) {
           rawCollection.add(e);
         }
     });
