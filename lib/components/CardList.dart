@@ -1,9 +1,12 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/storage/CollectionStorage.dart';
+import 'package:MagicFlutter/storage/DecksStorage.dart';
+import 'package:MagicFlutter/utils/ResponsiveSize.dart';
 import 'package:MagicFlutter/utils/SoundController.dart';
 import 'package:flutter/material.dart';
 
 import 'ActionItem.dart';
+import 'CardDialog.dart';
 import 'DualList.dart';
 import 'filter/CardFilters.dart';
 
@@ -18,6 +21,7 @@ class CardList extends StatefulWidget {
   final TapCard onTapCard;
   final List<PopupMenuEntry> menuItems;
   final List<Function> menuCallbacks;
+  final bool displayList;
 
   CardList({
     Key key,
@@ -29,6 +33,7 @@ class CardList extends StatefulWidget {
     this.onTapCard,
     this.menuItems,
     this.menuCallbacks,
+    this.displayList = false,
   }) : super(key: key);
 
   @override
@@ -40,6 +45,7 @@ class _CardListState extends State<CardList> {
   final CollectionStorage storage = new CollectionStorage();
   List<PopupMenuEntry> menuItems = [];
   List<Function> menuCallbacks = [];
+  DeckStorage deckStorage = new DeckStorage();
 
   void setup() {
     setState(() {
@@ -84,6 +90,46 @@ class _CardListState extends State<CardList> {
           flex: 1,
           child: DualList<MagicCard>(
             list: this.newCards,
+            displayList: widget.displayList,
+            renderListItem: (BuildContext context, int index, dynamic item) {
+              return Container(
+                padding: EdgeInsets.all(3.75),
+                child: ActionItem(
+                  onTap: widget.onTapCard,
+                  param: item,
+                  item: Container(
+                    width: ResponsiveSize.responsiveWidth(context, 100),
+                    height: ResponsiveSize.responsiveHeight(context, 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey,
+                            spreadRadius: 2,
+                            blurRadius: 3,
+                            offset: Offset(0, 1))
+                      ],
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FittedBox(
+                            child: Text(item.name == null ? '' : item.name.replaceAll(' // ', '\n')),
+                            fit: BoxFit.fitHeight,
+                          ),
+                          Text(item.manaCost == null ? '0' : item.manaCost), // Text('data'),
+                        ],
+                      ),
+                    )
+                  ),
+                  menuCallbacks: menuCallbacks,
+                  menuItems: menuItems,
+                ),
+              );
+            },
             renderItem: (BuildContext context, int index, dynamic item) {
               if (item == null) return Container();
               return Container(

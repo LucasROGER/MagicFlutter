@@ -20,6 +20,7 @@ class MyCollectionView extends StatefulWidget {
 class _MyCollectionViewState extends State<MyCollectionView> {
   final CollectionStorage storage = new CollectionStorage();
   List<MagicCard> cardList = [];
+  bool displayList = false;
 
   @override
   void initState() {
@@ -66,8 +67,17 @@ class _MyCollectionViewState extends State<MyCollectionView> {
   @override
   Widget build(BuildContext context) {
     if (cardList.length == 0) return Container();
-    return Container(
-      child: CardList(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            this.displayList = !this.displayList;
+          });
+        },
+        child: Icon(!this.displayList ? Icons.grid_view : Icons.list),
+      ),
+      body: CardList(
+        displayList: this.displayList,
         cards: this.cardList,
         onTapCard: (dynamic item) {
           showDialog<void>(
