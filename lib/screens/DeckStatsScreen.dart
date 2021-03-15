@@ -39,25 +39,25 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
     }
   }
 
-  List<Widget> getCardsType() {
+  Widget getCardsType() {
     List<String> cardTypes = [];
     Map<String, int> t = new Map<String, int>();
-    List<Widget> stats = [];
+    // List<Widget> stats = [];
 
-    stats.add(
-      Title.Title(
-        text: 'Card types',
-      ),
-    );
+    // stats.add(
+    //   Title.Title(
+    //     text: 'Card types',
+    //   ),
+    // );
 
-    stats.add(
-      SizedBox(height: 10),
-    );
+    // stats.add(
+    //   SizedBox(height: 10),
+    // );
 
-    if (deck.cards.isEmpty) {
-      stats.add(Text('No cards'));
-      return stats;
-    }
+    // if (deck.cards.isEmpty) {
+    //   stats.add(Text('No cards'));
+    //   return stats;
+    // }
 
     for (int i = 0; i < deck.cards.length; i++) {
       cardTypes += (List.from(deck.cards[i].types).cast<String>()) * deck.cards[i].count;
@@ -69,17 +69,19 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
       cardTypes.removeWhere((e) => e == type);
     }
 
-    t.forEach((key, value) {
-      stats.add(
-        Text('$key: $value')
-      );
-    });
+    // t.forEach((key, value) {
+    //   stats.add(
+    //     Text('$key: $value')
+    //   );
+    // });
 
     setState(() {
       this.types = t;
     });
 
-    return stats;
+    return Center(
+      child: Title.Title(text: 'Welcome to ' + deck.name + '\'s stats'),
+    );
   }
 
   List<BarChartGroupData> generateCmcBars() {
@@ -185,7 +187,8 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         children: [
-          // ...getCardsType(),
+          getCardsType(),
+          SizedBox(height: 20,),
           TypesChart(
             types: this.types,
           ),

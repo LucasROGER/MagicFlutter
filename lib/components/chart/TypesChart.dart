@@ -24,12 +24,12 @@ class _TypesChartState extends State<TypesChart> {
   int touchedIndex;
   Map<String, double> types = new Map<String, double>();
 
-  void setup() {
+  void setup() async {
     Map<String, double> tmp = new Map<String, double>();
     for (int i = 0; i < widget.types.length; i++) {
       tmp[widget.types.keys.elementAt(i)] = widget.types.values.elementAt(i).toDouble() / widget.types.values.map((e) => e).reduce((a, b) => a + b).toDouble();
     }
-    setState(() {
+    await setState(() {
       this.types = tmp;
     });
   }
