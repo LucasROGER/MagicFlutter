@@ -104,6 +104,11 @@ class MagicCard {
     data['url'] = this.url;
     return data;
   }
+  Map<String, dynamic> toExport() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['\"id\"'] = '\"' + this.id +'\"';
+    return data;
+  }
 }
 
 class PurchaseUrls {

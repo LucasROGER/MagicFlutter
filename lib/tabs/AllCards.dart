@@ -28,6 +28,7 @@ class _AllCardsViewState extends State<AllCardsView> {
 
   @override
   initState() {
+    new Future.delayed(const Duration(seconds: 1), () => _getAllCards());
     _getAllCards();
     super.initState();
   }

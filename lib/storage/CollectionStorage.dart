@@ -25,7 +25,7 @@ class CollectionStorage extends Storage<MagicCard> {
       if (myCards[i].id == item.id) {
         myCards[i].count -= 1;
         myCards.removeWhere((e) => e.count <= 0);
-        set(myCards);
+        await set(myCards);
       }
     }
     return myCards;
@@ -39,14 +39,14 @@ class CollectionStorage extends Storage<MagicCard> {
         myCards[i].count += 1;
       }
     }
-    set(myCards);
+    await set(myCards);
     return myCards;
   }
 
   Future<List<MagicCard>> removeFromCollection(MagicCard item) async {
     List<MagicCard> myCards = await get();
     myCards.removeWhere((e) => e.id == item.id);
-    set(myCards);
+    await set(myCards);
     return myCards;
   }
 
@@ -74,7 +74,7 @@ class CollectionStorage extends Storage<MagicCard> {
       newItem.count += 1;
       myCards[index] = newItem;
     }
-    set(myCards);
+    await set(myCards);
     return myCards;
   }
 
