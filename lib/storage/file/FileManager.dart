@@ -45,9 +45,10 @@ class FileManager {
       List<MagicCard> allCards = await storage.get();
       List jsonList = jsonDecode(value);
       if (jsonList == null) return -1;
-      for (int i = 0; i < allCards.length - 1; i++) {
-        for (int j = 0; j < jsonList.length - 1; j++) {
+      for (int i = 0; i < allCards.length; i++) {
+        for (int j = 0; j < jsonList.length; j++) {
           if (allCards[i].id == jsonList[j]['id']) {
+            print('allo');
             var cards = await collectionStorage.addOneToCollection(allCards[i]);
           }
         }
@@ -60,12 +61,11 @@ class FileManager {
     CollectionStorage collectionStorage = new CollectionStorage();
     List<MagicCard> collection = await collectionStorage.get();
     List<MagicCard> rawCollection = [];
-    await collection.forEach((e) {
-      rawCollection.add(e);
-      if (e.count > 1) {
-        for (int i = 0; i < e.count - 1; i++) {
-          rawCollection.add(e);
-        }
+    collection.forEach((e) {
+      print(e.count);
+      for (int i = 0; i < e.count; i++) {
+        print('i = ' + i.toString());
+        rawCollection.add(e);
       }
     });
     List<dynamic> json = rawCollection.map((e) => e.toExport()).toList();
