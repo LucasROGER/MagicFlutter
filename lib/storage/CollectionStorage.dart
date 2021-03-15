@@ -34,10 +34,15 @@ class CollectionStorage extends Storage<MagicCard> {
   Future<List<MagicCard>> addOneToCollection(MagicCard item) async {
     List<MagicCard> myCards = await get();
     int i = 0;
+    bool found = false;
     for (; i < myCards.length; i++) {
       if (myCards[i].id == item.id) {
         myCards[i].count += 1;
+        found = true;
       }
+    }
+    if (found == false) {
+      return await addToCollection(item);
     }
     await set(myCards);
     return myCards;
