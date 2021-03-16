@@ -1,3 +1,4 @@
+import 'package:MagicFlutter/components/chart/DevotionChart.dart';
 import 'package:MagicFlutter/components/chart/TypesChart.dart';
 import 'package:MagicFlutter/utils/Extensions.dart';
 import 'package:MagicFlutter/class/MagicDeck.dart';
@@ -26,6 +27,7 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
   MagicDeck deck;
   List<int> convertedManaCosts = [];
   Map<String, int> types = new Map<String, int>();
+  Map<String, int> devotions = new Map<String, int>();
 
   void _getDeck() async {
     List<MagicDeck> decks = await storage.get();
@@ -37,6 +39,30 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
         break;
       }
     }
+  }
+
+  void getDevotions() {
+    RegExp colors = RegExp('(\{[WUBRGC]\})');
+    Map<String, int> d = new Map<String, int>();
+
+    for (int i = 0; i < deck.cards.length; i++) {
+      if (deck.cards[i].manaCost == null) continue;
+      Iterable<RegExpMatch> list = colors.allMatches(deck.cards[i].manaCost);
+      Iterator<RegExpMatch> it = list.iterator;
+
+      while (it.moveNext()) {
+        String value = it.current.group(0).replaceAll('{', '').replaceAll('}', '');
+        if (d.keys.contains(value)) {
+          d[value] += 1;
+        } else {
+          d[value] = 1;
+        }
+      }
+    }
+
+    setState(() {
+      this.devotions = d;
+    });
   }
 
   Widget getCardsType() {
@@ -181,6 +207,7 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
   @override
   Widget build(BuildContext context) {
     if (this.deck == null) return Container();
+    getDevotions();
     return Screen(
       title: 'Stats',
       child: ListView(
@@ -191,6 +218,10 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
           SizedBox(height: 20,),
           TypesChart(
             types: this.types,
+          ),
+          SizedBox(height: 50,),
+          DevotionChart(
+            devotions: this.devotions,
           ),
           SizedBox(height: 50,),
           Container(
