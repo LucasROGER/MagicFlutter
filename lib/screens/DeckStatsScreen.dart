@@ -1,3 +1,4 @@
+import 'package:MagicFlutter/components/chart/TypesChart.dart';
 import 'package:MagicFlutter/utils/Extensions.dart';
 import 'package:MagicFlutter/class/MagicDeck.dart';
 import 'package:MagicFlutter/screens/base/Screen.dart';
@@ -24,6 +25,7 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
   DeckStorage storage = new DeckStorage();
   MagicDeck deck;
   List<int> convertedManaCosts = [];
+  Map<String, int> types = new Map<String, int>();
 
   void _getDeck() async {
     List<MagicDeck> decks = await storage.get();
@@ -37,25 +39,25 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
     }
   }
 
-  List<Widget> getCardsType() {
+  Widget getCardsType() {
     List<String> cardTypes = [];
-    Map<String, int> types = new Map<String, int>();
-    List<Widget> stats = [];
+    Map<String, int> t = new Map<String, int>();
+    // List<Widget> stats = [];
 
-    stats.add(
-      Title.Title(
-        text: 'Card types',
-      ),
-    );
+    // stats.add(
+    //   Title.Title(
+    //     text: 'Card types',
+    //   ),
+    // );
 
-    stats.add(
-      SizedBox(height: 10),
-    );
+    // stats.add(
+    //   SizedBox(height: 10),
+    // );
 
-    if (deck.cards.isEmpty) {
-      stats.add(Text('No cards'));
-      return stats;
-    }
+    // if (deck.cards.isEmpty) {
+    //   stats.add(Text('No cards'));
+    //   return stats;
+    // }
 
     for (int i = 0; i < deck.cards.length; i++) {
       cardTypes += (List.from(deck.cards[i].types).cast<String>()) * deck.cards[i].count;
@@ -63,17 +65,23 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
 
     while (cardTypes.isNotEmpty) {
       String type = cardTypes[0];
-      types[type] = cardTypes.where((element) => element == type).length;
+      t[type] = cardTypes.where((element) => element == type).length;
       cardTypes.removeWhere((e) => e == type);
     }
 
-    types.forEach((key, value) {
-      stats.add(
-        Text('$key: $value')
-      );
+    // t.forEach((key, value) {
+    //   stats.add(
+    //     Text('$key: $value')
+    //   );
+    // });
+
+    setState(() {
+      this.types = t;
     });
 
-    return stats;
+    return Center(
+      child: Title.Title(text: 'Welcome to ' + deck.name + '\'s stats'),
+    );
   }
 
   List<BarChartGroupData> generateCmcBars() {
@@ -140,8 +148,11 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
 
     if (deck == null) return;
     for (int i = 0; i < deck.cards.length; i++) {
-      if (!deck.cards[i].types.contains('Land'))
-        tmp.add(deck.cards[i].convertedManaCost);
+      if (!deck.cards[i].types.contains('Land')) {
+        for (int j = 0; j < deck.cards[i].count; j++) {
+          tmp.add(deck.cards[i].convertedManaCost);
+        }
+      }
     }
 
     int i = 0;
@@ -176,7 +187,11 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         children: [
-          ...getCardsType(),
+          getCardsType(),
+          SizedBox(height: 20,),
+          TypesChart(
+            types: this.types,
+          ),
           SizedBox(height: 50,),
           Container(
             decoration: BoxDecoration(
@@ -193,7 +208,9 @@ class _DeckStatsScreenState extends State<DeckStatsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Title.Title(text: 'CMCs'),
+                  Center(
+                    child: Title.Title(text: 'CMCs'),
+                  ),
                   SizedBox(height: 20,),
                   Text('Tap bars to see how many cards have this mana cost.'),
                   SizedBox(height: 20,),
