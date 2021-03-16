@@ -36,6 +36,7 @@ class _FilterState<T,U> extends State<Filter<T,U>> {
   List<FilterContent<T>> filterContent;
   List<bool> selected = [];
   List<Widget> widgets = [];
+  bool all = true;
 
   List<U> retrieveList() {
     List<U> res = [];
@@ -120,13 +121,27 @@ class _FilterState<T,U> extends State<Filter<T,U>> {
 
   @override
   Widget build(BuildContext context) {
-    //print(widget.list.length);
     _buildItems();
     return SizedBox(
       height: ResponsiveSize.responsiveHeight(context, 5),
       child: ListView(
         scrollDirection: Axis.horizontal,
-        children: this.widgets,
+        children: [
+          Checkbox(
+            value: this.all,
+            onChanged: (value) {
+              for (int i = 0; i < selected.length; i++) {
+                selected[i] = value;
+              }
+              setState(() {
+                this.selected = this.selected;
+                this.all = value;
+              });
+              widget.updateList(retrieveList());
+            },
+          ),
+          ...this.widgets,
+        ],
       )
     );
   }

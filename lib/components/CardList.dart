@@ -1,4 +1,6 @@
 import 'package:MagicFlutter/class/MagicCard.dart';
+import 'package:MagicFlutter/components/Cmc.dart';
+import 'package:MagicFlutter/components/Color.dart';
 import 'package:MagicFlutter/storage/CollectionStorage.dart';
 import 'package:MagicFlutter/storage/DecksStorage.dart';
 import 'package:MagicFlutter/utils/ResponsiveSize.dart';
@@ -46,6 +48,50 @@ class _CardListState extends State<CardList> {
   List<PopupMenuEntry> menuItems = [];
   List<Function> menuCallbacks = [];
   DeckStorage deckStorage = new DeckStorage();
+
+  List<Widget> getManaCost(String manaCost) {
+    List<Widget> res = [];
+    if (manaCost == null) {
+      return res;
+    }
+    RegExp x = RegExp('(\{[X]\})');
+    RegExp colorless = RegExp('(\{[0-9*]\})');
+    RegExp colors = RegExp('(\{[WUBRGC]\})');
+    Iterable<RegExpMatch> list = colorless.allMatches(manaCost);
+    Iterator<RegExpMatch> it = list.iterator;
+    const double size = 6;
+
+    while (it.moveNext()) {
+      res.add(SizedBox(width: 2,));
+      res.add(Cmc(
+        size: size,
+        cmc: double.parse(it.current.group(0).replaceAll('{', '').replaceAll('}', '')),
+      ));
+    }
+
+    list = x.allMatches(manaCost);
+    it = list.iterator;
+
+    while (it.moveNext()) {
+      res.add(SizedBox(width: 2,));
+      res.add(Cmc(
+        size: size,
+      ));
+    }
+
+    list = colors.allMatches(manaCost);
+    it = list.iterator;
+
+    while (it.moveNext()) {
+      res.add(SizedBox(width: 2,));
+      res.add(MtgColor(
+        size: size,
+        color: it.current.group(0).replaceAll('{', '').replaceAll('}', ''),
+      ));
+    }
+
+    return res;
+  }
 
   void setup() {
     setState(() {
@@ -120,7 +166,13 @@ class _CardListState extends State<CardList> {
                             child: Text(item.name == null ? '' : item.name.replaceAll(' // ', '\n')),
                             fit: BoxFit.fitHeight,
                           ),
-                          Text(item.manaCost == null ? '0' : item.manaCost), // Text('data'),
+                          Container(
+                            child: Row(
+                              children: [
+                                ...getManaCost(item.manaCost),
+                              ],
+                            ),
+                          ), // Text('data'),
                         ],
                       ),
                     )

@@ -7,7 +7,7 @@ class Cmc extends StatefulWidget {
 
   Cmc({
     Key key,
-    this.cmc,
+    this.cmc = -1,
     this.size = 5,
   }) : super(key: key);
 
@@ -32,7 +32,7 @@ class _CmcState extends State<Cmc> {
       child: Center(
         child: FittedBox(
           fit: BoxFit.fitWidth,
-          child: Text(widget.cmc.truncate().toString(),),
+          child: Text(widget.cmc == -1 ? 'X' : widget.cmc.truncate().toString(),),
         ),
       ),
     );

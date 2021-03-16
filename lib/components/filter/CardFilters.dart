@@ -46,11 +46,8 @@ class _CardFiltersState extends State<CardFilters> {
     List<MagicCard> res = [];
 
     for (int i = 0; i < widget.allCards.length; i++) {
-      if (allList.values
-              .where((element) => element.contains(widget.allCards[i]))
-              .length ==
-          allList.length) res.add(widget.allCards[i]);
-      // res.addAll(allList[allList.keys.toList()[i]].where((element) => !res.contains(element)));
+      if (allList.values.where((element) => element.contains(widget.allCards[i])).length == allList.length)
+        res.add(widget.allCards[i]);
     }
 
     res.sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id)));
@@ -122,9 +119,11 @@ class _CardFiltersState extends State<CardFilters> {
           ),
           child: Column(
             children: [
-              Visibility(
-                  visible: this.visible,
-                  child: Column(children: [
+              Container(
+                  height: this.visible ? null : 0,
+                  // visible: this.visible,
+                  child: Column(
+                      children: [
                     !widget.searchBar
                         ? Container()
                         : SearchBar(
