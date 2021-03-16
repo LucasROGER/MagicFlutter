@@ -47,8 +47,8 @@ class FileManager {
         List<MagicCard> allCards = await storage.get();
         List jsonList = jsonDecode(value);
         if (jsonList == null) return -1;
-        for (int j = 0; j < jsonList.length - 1; j++) {
-          for (int i = 0; i < allCards.length - 1; i++) {
+        for (int j = 0; j < jsonList.length; j++) {
+          for (int i = 0; i < allCards.length; i++) {
             if (jsonList[j]['id'] == null) return -1;
             if (allCards[i].id == jsonList[j]['id']) {
               var cards = await collectionStorage.addOneToCollection(allCards[i]);
@@ -68,7 +68,7 @@ class FileManager {
     List<MagicCard> collection = await collectionStorage.get();
     List<MagicCard> rawCollection = [];
     collection.forEach((e) {
-      for (int i = 0; i <= e.count; i++) {
+      for (int i = 0; i < e.count; i++) {
         rawCollection.add(e);
       }
     });
@@ -95,9 +95,9 @@ class FileManager {
                       : jsonList[j]['description'])
               .then((id) async {
             List cardList = jsonList[j]['cards'];
-            for (int i = 0; i < cardList.length - 1; i++) {
+            for (int i = 0; i < cardList.length; i++) {
               if (cardList[i]['id'] == null) return -1;
-              for (int k = 0; k < allCards.length - 1; k++) {
+              for (int k = 0; k < allCards.length; k++) {
                 if (allCards[k].id == cardList[i]['id']) {
                   var deck = await deckStorage.addToDeck(allCards[k], id);
                 }
