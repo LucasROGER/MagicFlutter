@@ -200,7 +200,7 @@ class _ProfileScreenState extends State<MyProfileView> {
                                           children: [
                                             Text(v == 0
                                                 ? 'Collection imported from clipboard'
-                                                : 'Collection can\'t imported'),
+                                                : 'Collection can\'t be imported'),
                                             TextButton(
                                               child: Text('OK'),
                                               onPressed: () {
@@ -233,7 +233,31 @@ class _ProfileScreenState extends State<MyProfileView> {
                                       MaterialStateProperty.all<Color>(
                                           Colors.red)),
                               onPressed: () {
-                                // files.exportDecks();
+                                files.exportDecks().then((v) {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        child: new Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Text(v == 0
+                                                ? 'Decks copied to clipboard'
+                                                : 'Decks can\'t be copied'),
+                                            TextButton(
+                                              child: Text('OK'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                });
                               }),
                           TextButton(
                               child: Row(
@@ -251,7 +275,31 @@ class _ProfileScreenState extends State<MyProfileView> {
                                       MaterialStateProperty.all<Color>(
                                           Colors.red)),
                               onPressed: () {
-                                // files.exportDecks();
+                                files.importDecks().then((v) {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        child: new Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Text(v == 0
+                                                ? 'Decks imported from clipboard'
+                                                : 'Decks can\'t be imported'),
+                                            TextButton(
+                                              child: Text('OK'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                });
                               }),
                         ],
                       )
@@ -295,6 +343,7 @@ class _ProfileScreenState extends State<MyProfileView> {
                                 onPressed: () {
                                   cstorage.clear();
                                   dstorage.clear();
+                                  Navigator.of(context).pop();
                                 },
                               ),
                             ],

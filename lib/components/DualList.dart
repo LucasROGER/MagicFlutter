@@ -78,6 +78,7 @@ class _DualListState<T> extends State<DualList<T>> {
     if (currentList == null || currentList.length == 0) {
       return Container(
         color: Colors.white,
+        margin: EdgeInsets.all(10),
         child: Container(
           child: Center(
             child: Text(

@@ -34,4 +34,20 @@ class MagicDeck {
     data['id'] = this.id;
     return data;
   }
+
+  Map<String, dynamic> toExport() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['\"name\"'] = '\"' + this.name + '\"';
+    data['\"description\"'] = '\"' + this.description + '\"';
+    List<MagicCard> deckCards = [];
+    this.cards.forEach((e) {
+      for (int i = 0; i <= e.count; i++) {
+        deckCards.add(e);
+      }
+    });
+    if (this.cards != null) {
+      data['\"cards\"'] = deckCards.map((v) => v.toExport()).toList();
+    }
+    return data;
+  }
 }

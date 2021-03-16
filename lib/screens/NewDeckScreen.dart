@@ -49,7 +49,7 @@ class _NewDeckScreenState extends State<NewDeckScreen> {
                       return;
                     }
                     await sound.playSound(SoundType.Validate);
-                    storage.createDeck(deckName.text, deckDescription.text);
+                    storage.createDeck(deckName.text.trim(), deckDescription.text.trim());
                     Navigator.of(context).pop(true);
                   },
                   child: Text('Create')),

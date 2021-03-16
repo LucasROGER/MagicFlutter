@@ -86,7 +86,37 @@ class _DeckScreenState extends State<DeckScreen> {
           icon: const Icon(Icons.delete),
           tooltip: 'Delete deck',
           onPressed: () {
-            _removeDeck();
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false, // user must tap button!
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Are you sure?'),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Text('This action is irreversible'),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('No'),
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
+                    TextButton(
+                      child: Text('Yes'),
+                      onPressed: () {
+                        _removeDeck();
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           },
         ),
         ElevatedButton(
