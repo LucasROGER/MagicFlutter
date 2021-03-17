@@ -56,7 +56,7 @@ class _TypesChartState extends State<TypesChart> {
       res.add(
         Indicator(
           color: Color(colors[i]),
-          text: this.types.keys.elementAt(i),
+          text: this.types.keys.elementAt(i) + ' (' + widget.types.values.elementAt(i).toString() + ')',
           isSquare: true,
         ),
       );

@@ -14,6 +14,8 @@ import 'filter/CardFilters.dart';
 
 typedef void TapCard(MagicCard card);
 
+const List<String> c = ['B', 'G', 'R', 'U', 'W'];
+
 class CardList extends StatefulWidget {
   final List<MagicCard> cards;
   final bool searchBarFilter;
@@ -49,6 +51,18 @@ class _CardListState extends State<CardList> {
   List<Function> menuCallbacks = [];
   DeckStorage deckStorage = new DeckStorage();
 
+  String sortColors(String colors) {
+    String res = '';
+
+    if (colors == '') return 'C';
+
+    for (int i = 0; i < c.length; i++) {
+      if (colors.contains(c[i]))
+        res += c[i];
+    }
+    return res;
+  }
+
   List<Widget> getManaCost(String manaCost) {
     List<Widget> res = [];
     if (manaCost == null) {
@@ -57,6 +71,8 @@ class _CardListState extends State<CardList> {
     RegExp x = RegExp('(\{[X]\})');
     RegExp colorless = RegExp('(\{[0-9*]\})');
     RegExp colors = RegExp('(\{[WUBRGC]\})');
+    RegExp bicolors = RegExp('(\{[WUBRGC]\/[WUBRGC]\})');
+    RegExp orGeneric = RegExp('(\{2\/[WUBRGC]\})');
     Iterable<RegExpMatch> list = colorless.allMatches(manaCost);
     Iterator<RegExpMatch> it = list.iterator;
     const double size = 6;
@@ -87,6 +103,28 @@ class _CardListState extends State<CardList> {
       res.add(MtgColor(
         size: size,
         color: it.current.group(0).replaceAll('{', '').replaceAll('}', ''),
+      ));
+    }
+
+    list = bicolors.allMatches(manaCost);
+    it = list.iterator;
+
+    while (it.moveNext()) {
+      res.add(SizedBox(width: 2,));
+      res.add(MtgColor(
+        size: size,
+        color: sortColors(it.current.group(0).replaceAll('{', '').replaceAll('}', '').replaceAll('/', '')),
+      ));
+    }
+
+    list = orGeneric.allMatches(manaCost);
+    it = list.iterator;
+
+    while (it.moveNext()) {
+      res.add(SizedBox(width: 2,));
+      res.add(MtgColor(
+        size: size,
+        color: it.current.group(0).replaceAll('{', '').replaceAll('}', '').replaceAll('/', ''),
       ));
     }
 
