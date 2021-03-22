@@ -5,6 +5,7 @@ import 'package:MagicFlutter/components/SelectDeckDialog.dart';
 import 'package:MagicFlutter/storage/AllCardsStorage.dart';
 import 'package:MagicFlutter/storage/CollectionStorage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AllCardsView extends StatefulWidget {
   @override
@@ -17,12 +18,15 @@ class _AllCardsViewState extends State<AllCardsView> {
   List<MagicCard> allCards = [];
   List<MagicCard> newCards = [];
   bool displayList = false;
+  String test = '';
 
   void _getAllCards() async {
+    // var et =     await rootBundle.loadString("assets/data/ELD.json");
     List<MagicCard> cards = await storage.get();
     setState(() {
       this.allCards = cards;
       this.newCards = cards;
+      // this.test = et;
     });
   }
 
@@ -43,7 +47,10 @@ class _AllCardsViewState extends State<AllCardsView> {
 
   @override
   Widget build(BuildContext context) {
-    if (this.allCards.length == 0) return Container();
+    if (this.allCards.length == 0) {
+      _getAllCards();
+      return Container();
+    }
     return Scaffold(
       body: CardList(
         cards: this.allCards,

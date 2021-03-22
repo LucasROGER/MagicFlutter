@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/storage/Storage.dart';
 import 'package:MagicFlutter/storage/file/FileManager.dart';

@@ -1,16 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:MagicFlutter/class/MagicCard.dart';
 import 'package:MagicFlutter/components/CardDialog.dart';
 import 'package:MagicFlutter/components/CardList.dart';
 import 'package:MagicFlutter/components/SelectDeckDialog.dart';
 import 'package:MagicFlutter/storage/CollectionStorage.dart';
-import 'package:MagicFlutter/storage/file/FileManager.dart';
-import 'package:ext_storage/ext_storage.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 
 class MyCollectionView extends StatefulWidget {
   @override
